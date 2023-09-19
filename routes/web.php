@@ -47,6 +47,7 @@ Route::resource('client', ClientController::class);
 
 
 
+
 // Rutas para ClientTokenController
 
 Route::resource('client-tokens', ClientTokenController::class);
