@@ -26,7 +26,9 @@ use App\Http\Controllers\MenuController;
 Route::get('/', function () {
     return view('welcome');
 });
+// Rutas para SemesterController
 
+<<<<<<< HEAD
 // Rutas para SemesterController
 Route::resource('semesters', SemesterController::class);
 
@@ -53,3 +55,62 @@ Route::resource('plate-images', PlateImageController::class);
 
 // Rutas para MenuController
 Route::resource('menus', MenuController::class);
+=======
+Route::resource('semesters', SemesterController::class);
+
+
+
+
+// Rutas para ServingTurnController
+
+Route::resource('serving-turns', ServingTurnController::class);
+
+
+
+
+// Rutas para ClientController
+
+Route::resource('client', ClientController::class);
+
+
+
+
+// Rutas para ClientTokenController
+
+Route::resource('client-tokens', ClientTokenController::class);
+
+
+
+
+// Rutas para ReservationController
+
+Route::resource('reservations', ReservationController::class);
+
+
+
+
+// Rutas para ClientNoteController
+
+Route::resource('client-notes', ClientNoteController::class);
+
+
+
+
+// Rutas para PlateController
+
+Route::resource('plates', PlateController::class);
+
+
+
+
+// Rutas para PlateImageController
+
+Route::resource('plate-images', PlateImageController::class);
+
+
+
+
+// Rutas para MenuController
+
+Route::resource('menus', MenuController::class);
+>>>>>>> 0804c8ce26e4984273cc270cabdabd3eb1ab3b78
