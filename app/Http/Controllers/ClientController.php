@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::get();
+        $clients = Client::all();
         return $clients;
     }
 

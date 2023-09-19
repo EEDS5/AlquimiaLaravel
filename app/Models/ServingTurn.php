@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServingTurn extends Model
 {
+    protected $table = 'serving_turn'; //Nombre correcto de la tabla
     protected $fillable = [
         'startTime',
         'endTime',
-        'semesterId',
+        'semester_id',
         'descript',
         'maxSlots',
         'frozen',
@@ -18,7 +19,7 @@ class ServingTurn extends Model
 
     public function semester()
     {
-        return $this->belongsTo(Semester::class);
+        return $this->belongsTo(Semester::class, 'semester_id'); // Asegura que la relación use 'semester_id'
     }
 
     public function menus()
@@ -26,3 +27,4 @@ class ServingTurn extends Model
         return $this->hasMany(Menu::class);
     }
 }
+

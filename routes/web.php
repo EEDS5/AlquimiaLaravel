@@ -28,14 +28,14 @@ Route::get('/', function () {
 });
 // Rutas para SemesterController
 
-Route::resource('semesters', SemesterController::class);
+Route::resource('semester', SemesterController::class);
 
 
 
 
 // Rutas para ServingTurnController
 
-Route::resource('serving-turns', ServingTurnController::class);
+Route::resource('servingturn', ServingTurnController::class);
 
 
 
@@ -71,7 +71,7 @@ Route::resource('client-notes', ClientNoteController::class);
 
 // Rutas para PlateController
 
-Route::resource('plates', PlateController::class);
+Route::resource('plate', PlateController::class);
 
 
 

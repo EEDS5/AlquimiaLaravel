@@ -12,18 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('serving_turn', function (Blueprint $table) {
-            $table->id();
-            $table->datetime('startTime');
-            $table->datetime('endTime');
-            $table->unsignedBigInteger('semester_id');
-            $table->string('descript', 1024)->nullable();
-            $table->integer('maxSlots');
-            $table->boolean('frozen');
-            $table->timestamps();
-            
-            $table->foreign('semester_id')->references('id')->on('semester');
+        $table->id();
+        $table->datetime('startTime');
+        $table->datetime('endTime');
+        $table->unsignedBigInteger('semester_id')->nullable(); // Permitido que sea nulo
+        $table->string('descript', 1024)->nullable();
+        $table->integer('maxSlots');
+        $table->boolean('frozen');
+        $table->timestamps();
+        
+        $table->foreign('semester_id')->references('id')->on('semester');
         });
     }
+
 
     /**
      * Reverse the migrations.

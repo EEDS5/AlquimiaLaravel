@@ -23,17 +23,19 @@ class ServingTurnController extends Controller
     public function store(Request $request)
     {
         $servingTurn = new ServingTurn([
-            'startTime' => $request->get('startTime'),
-            'endTime' => $request->get('endTime'),
-            'semesterId' => $request->get('semesterId'),
-            'descript' => $request->get('descript'),
-            'maxSlots' => $request->get('maxSlots'),
-            'frozen' => $request->get('frozen')
-        ]);
+        'startTime' => $request->get('startTime'),
+        'endTime' => $request->get('endTime'),
+        'semester_id' => $request->has('semester_id') ? $request->get('semester_id') : null, // Cambiado a null si no se proporciona
+        'descript' => $request->get('descript'),
+        'maxSlots' => $request->get('maxSlots'),
+        'frozen' => $request->has('frozen') ? $request->get('frozen') : 0
+    ]);
 
         $servingTurn->save();
         return redirect('/servingturns')->with('success', 'Serving Turn saved!');
     }
+
+
 
     public function show(ServingTurn $servingTurn)
     {

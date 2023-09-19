@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plate extends Model
 {
+    protected $table = 'plate'; // Nombre correcto de la tabla
     protected $fillable = [
         'plateName',
         'defaultPrice',

@@ -21,11 +21,12 @@ class PlateController extends Controller
     public function store(Request $request)
     {
         $plate = new Plate([
-            'plateName' => $request->get('plateName'),
-            'defaultPrice' => $request->get('defaultPrice'),
-            'descriptionShort' => $request->get('descriptionShort'),
-            'descriptionLong' => $request->get('descriptionLong')
-        ]);
+        'plateName' => $request->get('plateName'),
+        'defaultPrice' => $request->get('defaultPrice'),
+        'descriptionShort' => $request->get('descriptionShort'),
+        'descriptionLong' => $request->get('descriptionLong'),
+        'frozen' => $request->has('frozen') ? 1 : 0  // Assuming 'frozen' is a checkbox
+    ]);
 
         $plate->save();
         return redirect('/plates')->with('success', 'Plate saved!');

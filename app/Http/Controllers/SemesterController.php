@@ -20,16 +20,17 @@ class SemesterController extends Controller
     }
 
     public function store(Request $request)
-    {
+   {
         $semester = new Semester([
-            'dateStart' => $request->get('dateStart'),
-            'dateEnd' => $request->get('dateEnd'),
-            'frozen' => $request->get('frozen')
-        ]);
+        'dateStart' => $request->get('dateStart'),
+        'dateEnd' => $request->get('dateEnd'),
+        'frozen' => $request->has('frozen') ? 1 : 0
+    ]);
 
-        $semester->save();
-        return redirect('/semesters')->with('success', 'Semester saved!');
-    }
+       $semester->save();
+       return redirect('/semesters')->with('success', 'Semestre creado exitosamente.');
+   }
+
 
     public function show(Semester $semester)
     {

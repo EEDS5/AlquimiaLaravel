@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Semester extends Model
 {
+    protected $table = 'semester'; // Nombre correcto de la tabla
+
     protected $fillable = [
         'dateStart',
         'dateEnd',
