@@ -10,9 +10,9 @@
         <label for="fullName">Full Name:</label>
         <input type="text" name="fullName" required><br><br>
         <label for="passwordSalt">Password Salt (BLOB):</label>
-        <input type="text" name="passwordSalt"><br><br>
+        <input type="password" name="passwordSalt"><br><br>
         <label for="passwordHash">Password Hash (BLOB):</label>
-        <input type="text" name="passwordHash"><br><br>
+        <input type="password" name="passwordHash"><br><br>
         <label for="phone">Phone:</label>
         <input type="text" name="phone"><br><br>
         <label for="email">Email:</label>

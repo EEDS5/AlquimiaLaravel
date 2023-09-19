@@ -7,13 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = [
-        'fullName',
-        'passwordSalt',
-        'passwordHash',
-        'phone',
-        'email',
-    ];
+    protected $table = 'client'; // Nombre correcto de la tabla
+    protected $fillable = ['fullName', 'passwordSalt', 'passwordHash', 'phone', 'email'];
 
     public function tokens()
     {
