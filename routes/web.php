@@ -26,6 +26,8 @@ use App\Http\Controllers\MenuController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
 // Rutas para SemesterController
 
 Route::resource('semester', SemesterController::class);
