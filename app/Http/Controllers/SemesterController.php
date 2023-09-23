@@ -11,7 +11,8 @@ class SemesterController extends Controller
     public function index()
     {
         $semesters = Semester::all();
-        return view('semester.index', compact('semesters'));
+        return $semesters;
+        //return view('semester.index', compact('semesters'));
     }
 
     public function create()

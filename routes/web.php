@@ -52,21 +52,21 @@ Route::resource('client', ClientController::class);
 
 // Rutas para ClientTokenController
 
-Route::resource('client-tokens', ClientTokenController::class);
+Route::resource('client-token', ClientTokenController::class);
 
 
 
 
 // Rutas para ReservationController
 
-Route::resource('reservations', ReservationController::class);
+Route::resource('reservation', ReservationController::class);
 
 
 
 
 // Rutas para ClientNoteController
 
-Route::resource('client-notes', ClientNoteController::class);
+Route::resource('client-note', ClientNoteController::class);
 
 
 
@@ -80,11 +80,11 @@ Route::resource('plate', PlateController::class);
 
 // Rutas para PlateImageController
 
-Route::resource('plate-images', PlateImageController::class);
+Route::resource('plate-image', PlateImageController::class);
 
 
 
 
 // Rutas para MenuController
 
-Route::resource('menus', MenuController::class);
+Route::resource('menu', MenuController::class);

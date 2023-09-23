@@ -30,7 +30,7 @@ class ClientController extends Controller
         ]);
 
         $client->save();
-        return redirect('/clients')->with('success', 'Client saved!');
+        return redirect('/client')->with('success', 'Client saved!');
     }
 
     public function show(Client $client)
@@ -52,12 +52,12 @@ class ClientController extends Controller
         $client->email = $request->get('email');
 
         $client->save();
-        return redirect('/clients')->with('success', 'Client updated!');
+        return redirect('/client')->with('success', 'Client updated!');
     }
 
     public function destroy(Client $client)
     {
         $client->delete();
-        return redirect('/clients')->with('success', 'Client deleted!');
+        return redirect('/client')->with('success', 'Client deleted!');
     }
 }

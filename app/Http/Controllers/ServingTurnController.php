@@ -11,7 +11,8 @@ class ServingTurnController extends Controller
     public function index()
     {
         $servingTurns = ServingTurn::all();
-        return view('servingturn.index', compact('servingTurns'));
+        return $servingTurns;
+        //return view('servingturn.index', compact('servingTurns'));
     }
 
     public function create()
