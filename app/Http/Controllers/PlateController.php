@@ -10,6 +10,7 @@ class PlateController extends Controller
     public function index()
     {
         $plates = Plate::all();
+        //return $plates;
         return view('plate.index', compact('plates'));
     }
 
@@ -29,7 +30,7 @@ class PlateController extends Controller
     ]);
 
         $plate->save();
-        return redirect('/plates')->with('success', 'Plate saved!');
+        return redirect('/plate')->with('success', 'Plate saved!');
     }
 
     public function show(Plate $plate)

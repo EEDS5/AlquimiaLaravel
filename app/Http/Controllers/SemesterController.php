@@ -11,8 +11,8 @@ class SemesterController extends Controller
     public function index()
     {
         $semesters = Semester::all();
-        return $semesters;
-        //return view('semester.index', compact('semesters'));
+        //return $semesters;
+        return view('semester.index', compact('semesters'));
     }
 
     public function create()
@@ -29,7 +29,7 @@ class SemesterController extends Controller
     ]);
 
        $semester->save();
-       return redirect('/semesters')->with('success', 'Semestre creado exitosamente.');
+       return redirect('/semester')->with('success', 'Semestre creado exitosamente.');
    }
 
 
@@ -50,12 +50,12 @@ class SemesterController extends Controller
         $semester->frozen = $request->get('frozen');
 
         $semester->save();
-        return redirect('/semesters')->with('success', 'Semester updated!');
+        return redirect('/semester')->with('success', 'Semester updated!');
     }
 
     public function destroy(Semester $semester)
     {
         $semester->delete();
-        return redirect('/semesters')->with('success', 'Semester deleted!');
+        return redirect('/semester')->with('success', 'Semester deleted!');
     }
 }
