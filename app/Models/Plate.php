@@ -25,4 +25,6 @@ class Plate extends Model
     {
         return $this->hasMany(PlateServing::class);
     }
+
+    use HasFactory;
 }
