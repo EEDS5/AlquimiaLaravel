@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB; // Agrega esta línea de importación
-
+use Database\Factories\ClientFactory;
 class ClientSeeder extends Seeder
 {
     /**
@@ -29,6 +29,8 @@ class ClientSeeder extends Seeder
             'phone' => '9876543210',
             'email' => 'cliente2@example.com',
         ]);
+
+        ClientFactory::new()->count(50)->create();
 
         // Agrega más registros según sea necesario
     }

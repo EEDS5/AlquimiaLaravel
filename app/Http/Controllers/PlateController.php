@@ -29,7 +29,7 @@ class PlateController extends Controller
     ]);
 
         $plate->save();
-        return redirect('/plates')->with('success', 'Plate saved!');
+        return redirect('/plate')->with('success', 'Plate saved!');
     }
 
     public function show(Plate $plate)

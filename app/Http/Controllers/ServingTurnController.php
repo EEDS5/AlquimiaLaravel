@@ -11,8 +11,8 @@ class ServingTurnController extends Controller
     public function index()
     {
         $servingTurns = ServingTurn::all();
-        return $servingTurns;
-        //return view('servingturn.index', compact('servingTurns'));
+        //return $servingTurns;
+        return view('servingturn.index', compact('servingTurns'));
     }
 
     public function create()
@@ -33,7 +33,7 @@ class ServingTurnController extends Controller
     ]);
 
         $servingTurn->save();
-        return redirect('/servingturns')->with('success', 'Serving Turn saved!');
+        return redirect('/servingturn')->with('success', 'Serving Turn saved!');
     }
 
 
@@ -59,12 +59,12 @@ class ServingTurnController extends Controller
         $servingTurn->frozen = $request->get('frozen');
 
         $servingTurn->save();
-        return redirect('/servingturns')->with('success', 'Serving Turn updated!');
+        return redirect('/servingturn')->with('success', 'Serving Turn updated!');
     }
 
     public function destroy(ServingTurn $servingTurn)
     {
         $servingTurn->delete();
-        return redirect('/servingturns')->with('success', 'Serving Turn deleted!');
+        return redirect('/servingturn')->with('success', 'Serving Turn deleted!');
     }
 }
