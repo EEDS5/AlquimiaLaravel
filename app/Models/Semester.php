@@ -19,4 +19,6 @@ class Semester extends Model
     {
         return $this->hasMany(ServingTurn::class);
     }
+    
+    use HasFactory;
 }

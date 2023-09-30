@@ -26,5 +26,7 @@ class ServingTurn extends Model
     {
         return $this->hasMany(Menu::class);
     }
+    
+    use HasFactory;
 }
 
