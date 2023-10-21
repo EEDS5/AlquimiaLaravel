@@ -8,7 +8,7 @@ use Database\Factories\ServingTurnFactory;
 use App\Models\Semester;
 use App\Models\ServingTurn;
 
-class ServingturnTableSeeder extends Seeder
+class ServingTurnTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -47,16 +47,9 @@ class ServingturnTableSeeder extends Seeder
         // foreach ($serving_turn as $servingturn) {
         //     Servingturn::create($servingturn);
         // }
+
         $servingTurnFactory = ServingTurnFactory::factoryForModel(ServingTurn::class);
-        $servingTurnFactory->count(10)->create();
-
-        
-        
-
-
-
-
-        
+        $servingTurnFactory->count(10)->create(); 
     }
 }
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminToken extends Model
 {
+    protected $table = 'admin_token'; //Nombre correcto de la tabla
     protected $fillable = [
         'employeeId',
         'expiration',

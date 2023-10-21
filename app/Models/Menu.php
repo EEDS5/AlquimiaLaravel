@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    protected $table = 'menu'; //Nombre correcto de la tabla
     protected $fillable = [
         'servingTurnId',
         'menuDescription',

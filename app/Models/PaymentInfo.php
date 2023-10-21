@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentInfo extends Model
 {
+    protected $table = 'payment_info'; //Nombre correcto de la tabla
     protected $fillable = [
         'reservationId',
         'paymentMethod',

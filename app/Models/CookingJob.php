@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CookingJob extends Model
 {
+    protected $table = 'cooking_job'; //Nombre correcto de la tabla
     protected $fillable = [
         'occupiedSeatingTableId',
         'expectedCompletionTime',

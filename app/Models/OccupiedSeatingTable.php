@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OccupiedSeatingTable extends Model
 {
+    protected $table = 'occupied_seating_table'; //Nombre correcto de la tabla
     protected $fillable = [
         'seatingTableId',
         'reservationId',

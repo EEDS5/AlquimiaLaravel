@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientNote extends Model
 {
+    protected $table = 'client_note'; //Nombre correcto de la tabla
     protected $fillable = [
         'reservationId',
         'note',
