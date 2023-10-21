@@ -10,6 +10,15 @@ use App\Http\Controllers\ClientNoteController;
 use App\Http\Controllers\PlateController;
 use App\Http\Controllers\PlateImageController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\AdminTokenController;
+use App\Http\Controllers\CookingJobController;
+use App\Http\Controllers\OccupiedSeatingTableController;
+use App\Http\Controllers\SeatingTableController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeePrivilegeController;
+use App\Http\Controllers\PaymentInfoController;
+use App\Http\Controllers\PlateServingController;
+use App\Http\Controllers\ReservationItemController;
 
 
 /*
@@ -28,63 +37,60 @@ Route::get('/', function () {
 });
 
 
-// Rutas para SemesterController
-
+// Rutas para SemesterController 1
 Route::resource('semester', SemesterController::class);
 
-
-
-
-// Rutas para ServingTurnController
-
+// Rutas para ServingTurnController 2
 Route::resource('servingturn', ServingTurnController::class);
 
-
-
-
-// Rutas para ClientController
-
+// Rutas para ClientController 3
 Route::resource('client', ClientController::class);
 
-
-
-
-
-// Rutas para ClientTokenController
-
+// Rutas para ClientTokenController 4
 Route::resource('client-token', ClientTokenController::class);
 
-
-
-
-// Rutas para ReservationController
-
+// Rutas para ReservationController 5
 Route::resource('reservation', ReservationController::class);
 
-
-
-
-// Rutas para ClientNoteController
-
+// Rutas para ClientNoteController 6
 Route::resource('client-note', ClientNoteController::class);
 
-
-
-
-// Rutas para PlateController
-
+// Rutas para PlateController 7
 Route::resource('plate', PlateController::class);
 
-
-
-
-// Rutas para PlateImageController
-
+// Rutas para PlateImageController 8
 Route::resource('plate-image', PlateImageController::class);
 
-
-
-
-// Rutas para MenuController
-
+// Rutas para MenuController 9
 Route::resource('menu', MenuController::class);
+
+// Rutas para AdminTokenController 10
+Route::resource('admin-token', AdminTokenController::class);
+
+// Rutas para CookingJobController 11
+Route::resource('cooking-job', CookingJobController::class);
+
+// Rutas para OccupiedSeatingTableController 12
+Route::resource('occupied-seating-table', OccupiedSeatingTableController::class);
+
+// Rutas para SeatingTableController 13
+Route::resource('seating-table', SeatingTableController::class);
+
+// Rutas para EmployeeController 14
+Route::resource('employee', EmployeeController::class);
+
+// Rutas para EmployeePrivilegeController 15
+Route::resource('employee-privilege', EmployeePrivilegeController::class);
+
+// Rutas para PaymentInfoController 16
+Route::resource('payment-info', PaymentInfoController::class);
+
+// Rutas para PlateServingController 17
+Route::resource('plate-serving', PlateServingController::class);
+
+// Rutas para ReservationItemController 18
+Route::resource('reservation-item', ReservationItemController::class);
+
+
+
+
