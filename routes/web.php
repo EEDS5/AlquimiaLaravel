@@ -45,9 +45,20 @@ Route::resource('servingturn', ServingTurnController::class);
 
 // Rutas para ClientController 3
 Route::resource('client', ClientController::class);
+
+
+
+
+
+
+
+
 Route::get('/login', [ClientController::class, 'login'])->name('login');
-Route::post('/login', [ClientController::class, 'loginPost'])->name('login.post');
-Route::get('/dashboard', [ClientController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+Route::post('/authenticate', [ClientController::class, 'authenticate'])->name('authenticate');
+
+Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
+Route::post('/logout', [ClientController::class, 'logout'])->name('logout');
+
 
 
 

@@ -22,32 +22,26 @@ class ClientController extends Controller
         return view('auth.login');
     }
 
-    public function loginPost(Request $request)
+    public function authenticate(Request $request)
     {
-        $email = $request->get('email');
-        $passwordSalt = $request->get('passwordSalt');
+        $credentials = $request->only('email', 'passwordSalt');
+
+        $client = Client::where('email', $credentials['email'])->first();
     
-        // Busca al usuario en la base de datos por su email
-        $client = Client::where('email', $email)->first();
+        if ($client && Hash::check($credentials['passwordSalt'], $client->passwordSalt)) {
+            session()->regenerate(); // Regenerar la sesión por seguridad
+            session(['user_id' => $client->id]); // Almacenar el ID del usuario en la sesión
     
-        // Si el usuario no existe, devuelve un error
-        if (!$client) {
-            return redirect('/login')->with('error', 'Invalid email or password');
+            return redirect('/dashboard');
+        } else {
+            return back()->with('error', 'Credenciales inválidas');
         }
-    
-        // Verifica si la contraseña es correcta
-        if (!Hash::check($passwordSalt, $client->passwordHash)) {
-            return redirect('/login')->with('error', 'Invalid email or password');
-        }
-    
-        // Guarda al usuario en la sesión
-        session(['client' => $client]);
-    
-        // Agregar un dd para verificar el usuario autenticado
-        dd($client);
-    
-        // Redirige al usuario al dashboard
-        return redirect()->route('dashboard'); // Debes usar la ruta con nombre que definiste
+    }
+
+    public function logout()
+    {
+        session()->forget('user_id'); // Eliminar el ID de usuario de la sesión
+        return redirect('/login')->with('success', 'Has cerrado sesión exitosamente.');
     }
     
 
@@ -63,7 +57,7 @@ class ClientController extends Controller
     {
         $client = new Client([
             'fullName' => $request->get('fullName'),
-            'passwordSalt' => $request->get('passwordSalt'),
+            'passwordSalt' => Hash::make($request->get('passwordSalt')),
             'passwordHash' => $request->get('passwordHash'),
             'phone' => $request->get('phone'),
             'email' => $request->get('email')
@@ -97,7 +91,11 @@ class ClientController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard'); // Aquí debes especificar la vista que quieres mostrar en el panel de control.
+        if (session()->has('user_id')) {
+            return view('dashboard');
+        } else {
+            return redirect('/login')->with('error', 'Inicia sesión para acceder al panel de control.');
+        }
     }
 
     public function destroy(Client $client)

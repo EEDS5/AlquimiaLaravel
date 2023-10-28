@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
-class Client extends Model
+class Client extends User
 {
     protected $table = 'client'; // Nombre correcto de la tabla
     protected $fillable = ['fullName', 'passwordSalt', 'passwordHash', 'phone', 'email'];
