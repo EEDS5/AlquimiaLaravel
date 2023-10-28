@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ReservationItem extends Model
-{
+{ 
+    use HasFactory;
+
     protected $table = 'reservation_item'; //Nombre correcto de la tabla
     protected $fillable = [
         'reservationId',
@@ -16,7 +18,7 @@ class ReservationItem extends Model
 
     public function reservation()
     {
-        return $this->belongsTo(Reservation::class);
+        return $this->belongsTo(Reservation::class,'reservationId');
     }
 
     public function plateServing()

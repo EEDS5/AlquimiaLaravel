@@ -7,59 +7,47 @@ use App\Models\SeatingTable;
 
 class SeatingTableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tables = SeatingTable::all();
+        return view('seatingTable.index', ['tables' => $tables]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('seatingTable.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $table = SeatingTable::create($request->all());
+        return redirect()->route('seatingTable.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $table = SeatingTable::find($id);
+        return view('seatingTable.show', ['table' => $table]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $table = SeatingTable::find($id);
+        return view('seatingTable.edit', ['table' => $table]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $table = SeatingTable::find($id);
+        $table->update($request->all());
+        return redirect()->route('seatingTable.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $table = SeatingTable::find($id);
+        $table->delete();
+        return redirect()->route('seatingTable.index');
     }
+
 }

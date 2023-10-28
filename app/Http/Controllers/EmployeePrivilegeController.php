@@ -7,59 +7,47 @@ use App\Models\EmployeePrivilege;
 
 class EmployeePrivilegeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $privileges = EmployeePrivilege::all();
+        return view('privilege.index', ['privileges' => $privileges]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('privilege.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $privilege = EmployeePrivilege::create($request->all());
+        return redirect()->route('privilege.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $privilege = EmployeePrivilege::find($id);
+        return view('privilege.show', ['privilege' => $privilege]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $privilege = EmployeePrivilege::find($id);
+        return view('privilege.edit', ['privilege' => $privilege]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $privilege = EmployeePrivilege::find($id);
+        $privilege->update($request->all());
+        return redirect()->route('privilege.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $privilege = EmployeePrivilege::find($id);
+        $privilege->delete();
+        return redirect()->route('privilege.index');
     }
+
 }

@@ -45,6 +45,11 @@ Route::resource('servingturn', ServingTurnController::class);
 
 // Rutas para ClientController 3
 Route::resource('client', ClientController::class);
+Route::get('/login', [ClientController::class, 'login'])->name('login');
+Route::post('/login', [ClientController::class, 'loginPost'])->name('login.post');
+Route::get('/dashboard', [ClientController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+
+
 
 // Rutas para ClientTokenController 4
 Route::resource('client-token', ClientTokenController::class);

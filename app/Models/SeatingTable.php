@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeatingTable extends Model
 {
-    // No se requieren atributos fillable para esta tabla
-    // use HasFactory;
+
+    use HasFactory;
+
+    public function occupiedSeatingTables()
+    {
+        return $this->hasMany(OccupiedSeatingTable::class);
+    }
+
 }

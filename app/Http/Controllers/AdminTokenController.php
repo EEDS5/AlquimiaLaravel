@@ -7,59 +7,47 @@ use App\Models\AdminToken;
 
 class AdminTokenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $adminTokens = AdminToken::all();
+        return view('adminToken.index', ['adminTokens' => $adminTokens]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('adminToken.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $adminToken = AdminToken::create($request->all());
+        return redirect()->route('adminToken.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $adminToken = AdminToken::find($id);
+        return view('adminToken.show', ['adminToken' => $adminToken]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $adminToken = AdminToken::find($id);
+        return view('adminToken.edit', ['adminToken' => $adminToken]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $adminToken = AdminToken::find($id);
+        $adminToken->update($request->all());
+        return redirect()->route('adminToken.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $adminToken = AdminToken::find($id);
+        $adminToken->delete();
+        return redirect()->route('adminToken.index');
     }
+
 }

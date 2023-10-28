@@ -7,59 +7,47 @@ use App\Models\CookingJob;
 
 class CookingJobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $cookingJobs = CookingJob::all();
+        return view('cookingJob.index', ['cookingJobs' => $cookingJobs]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('cookingJob.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $cookingJob = CookingJob::create($request->all());
+        return redirect()->route('cookingJob.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $cookingJob = CookingJob::find($id);
+        return view('cookingJob.show', ['cookingJob' => $cookingJob]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $cookingJob = CookingJob::find($id);
+        return view('cookingJob.edit', ['cookingJob' => $cookingJob]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $cookingJob = CookingJob::find($id);
+        $cookingJob->update($request->all());
+        return redirect()->route('cookingJob.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $cookingJob = CookingJob::find($id);
+        $cookingJob->delete();
+        return redirect()->route('cookingJob.index');
     }
+
 }

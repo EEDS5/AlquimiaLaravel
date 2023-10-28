@@ -7,59 +7,47 @@ use App\Models\PlateServing;
 
 class PlateServingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $plateServings = PlateServing::all();
+        return view('plateServing.index', ['plateServings' => $plateServings]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('plateServing.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $plateServing = PlateServing::create($request->all());
+        return redirect()->route('plateServing.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $plateServing = PlateServing::find($id);
+        return view('plateServing.show', ['plateServing' => $plateServing]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $plateServing = PlateServing::find($id);
+        return view('plateServing.edit', ['plateServing' => $plateServing]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $plateServing = PlateServing::find($id);
+        $plateServing->update($request->all());
+        return redirect()->route('plateServing.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $plateServing = PlateServing::find($id);
+        $plateServing->delete();
+        return redirect()->route('plateServing.index');
     }
+
 }

@@ -65,6 +65,8 @@
             <li><a href="{{ route('semester.store') }}">Ver semestre</a></li>
             <li><a href="{{ route('servingturn.create') }}">Crear turno de servicio</a></li>
             <li><a href="{{ route('servingturn.store') }}">Ver turno de servicio</a></li>
+            <li><a href="{{ route('reservation.create') }}">Crear reserva</a></li>
+            <li><a href="{{route('login')}}">Login</a></li>
         </ul>
     </nav>
 </header>

@@ -7,59 +7,47 @@ use App\Models\OccupiedSeatingTable;
 
 class OccupiedSeatingTableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $occupiedTables = OccupiedSeatingTable::all();
+        return view('occupiedSeatingTable.index', ['occupiedTables' => $occupiedTables]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('occupiedSeatingTable.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $occupiedTable = OccupiedSeatingTable::create($request->all());
+        return redirect()->route('occupiedSeatingTable.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $occupiedTable = OccupiedSeatingTable::find($id);
+        return view('occupiedSeatingTable.show', ['occupiedTable' => $occupiedTable]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $occupiedTable = OccupiedSeatingTable::find($id);
+        return view('occupiedSeatingTable.edit', ['occupiedTable' => $occupiedTable]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $occupiedTable = OccupiedSeatingTable::find($id);
+        $occupiedTable->update($request->all());
+        return redirect()->route('occupiedSeatingTable.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $occupiedTable = OccupiedSeatingTable::find($id);
+        $occupiedTable->delete();
+        return redirect()->route('occupiedSeatingTable.index');
     }
+
 }

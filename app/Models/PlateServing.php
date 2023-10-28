@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlateServing extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'plate_serving'; //Nombre correcto de la tabla
     protected $fillable = [
         'plateId',

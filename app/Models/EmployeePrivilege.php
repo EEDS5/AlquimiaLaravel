@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeePrivilege extends Model
 {
+
+    use HasFactory;
+    
     protected $table = 'employee_privilege'; //Nombre correcto de la tabla
     protected $fillable = [
         'employeeId',

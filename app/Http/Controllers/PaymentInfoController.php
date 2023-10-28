@@ -7,59 +7,47 @@ use App\Models\PaymentInfo;
 
 class PaymentInfoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $paymentInfos = PaymentInfo::all();
+        return view('paymentInfo.index', ['paymentInfos' => $paymentInfos]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('paymentInfo.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $paymentInfo = PaymentInfo::create($request->all());
+        return redirect()->route('paymentInfo.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $paymentInfo = PaymentInfo::find($id);
+        return view('paymentInfo.show', ['paymentInfo' => $paymentInfo]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $paymentInfo = PaymentInfo::find($id);
+        return view('paymentInfo.edit', ['paymentInfo' => $paymentInfo]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $paymentInfo = PaymentInfo::find($id);
+        $paymentInfo->update($request->all());
+        return redirect()->route('paymentInfo.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $paymentInfo = PaymentInfo::find($id);
+        $paymentInfo->delete();
+        return redirect()->route('paymentInfo.index');
     }
+
 }
