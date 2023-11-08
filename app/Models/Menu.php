@@ -7,20 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $table = 'menu'; //Nombre correcto de la tabla
-    protected $fillable = [
-        'servingTurnId',
-        'menuDescription',
-        'isOpen',
-    ];
+    protected $fillable = ['nombre', 'estado'];
 
-    public function servingTurn()
+    public function platos()
     {
-        return $this->belongsTo(ServingTurn::class);
-    }
-
-    public function plateServings()
-    {
-        return $this->hasMany(PlateServing::class);
+        return $this->belongsToMany(Plato::class, 'menu_ofertados');
     }
 }

@@ -1,0 +1,173 @@
+-- Tabla Persona:
+CREATE TABLE Persona (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(30) NOT NULL,
+    Apellido VARCHAR(30) NOT NULL,
+    Identificacion VARCHAR(30) UNIQUE NOT NULL,
+    FechaNacimiento DATE,
+    Telefono VARCHAR(30),
+    Direccion VARCHAR(50),
+    Email VARCHAR(30) UNIQUE NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla TipoEmpleado:
+CREATE TABLE TipoEmpleado (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Rol VARCHAR(50) NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Empleado:
+CREATE TABLE Empleado (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Persona_Id INT NOT NULL,
+    TipoEmpleado_Id INT NOT NULL,
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE,
+    Estado BOOLEAN NOT NULL,
+    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id),
+    FOREIGN KEY (TipoEmpleado_Id) REFERENCES TipoEmpleado(Id)
+);
+
+-- Tabla Cliente:
+CREATE TABLE Cliente (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Persona_Id INT NOT NULL,
+    FechaRegistro DATE NOT NULL,
+    RazonSocial VARCHAR(50),
+    Estado BOOLEAN NOT NULL,
+    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id)
+);
+
+-- Tabla Menu:
+CREATE TABLE Menu (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Plato:
+CREATE TABLE Plato (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Imagen VARCHAR(255),
+    Descripcion VARCHAR(100),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Menu_Ofertado:
+CREATE TABLE Menu_Ofertado (
+    Menu_Id INT NOT NULL,
+    Plato_Id INT NOT NULL,
+    PRIMARY KEY (Menu_Id, Plato_Id),
+    FOREIGN KEY (Menu_Id) REFERENCES Menu(Id),
+    FOREIGN KEY (Plato_Id) REFERENCES Plato(Id)
+);
+
+-- Tabla Categoria:
+CREATE TABLE Categoria (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Tipo de Plato:
+CREATE TABLE TipoPlato (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(100),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Turno:
+CREATE TABLE Turno (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL,
+    HoraEntrada TIME NOT NULL,
+    HoraLimite TIME NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla GestionMenu:
+CREATE TABLE GestionMenu (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Categoria_Id NOT NULL,
+    Descripcion VARCHAR(50) NOT NULL,
+    Costo DECIMAL(6,2) NOT NULL,
+    totalCupo INT NOT NULL,
+    cupoDisponible INT NOT NULL,
+    Fecha DATETIME NOT NULL,
+    Estado char(1) NOT NULL
+
+    FOREIGN KEY (Categoria_Id) REFERENCES Categoria(Id)
+);
+
+-- Tabla Bebidas:
+CREATE TABLE Bebidas (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(30) NOT NULL,
+    Descripcion VARCHAR(30),
+    Imagen VARCHAR(50),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Bebida_Ofertada:
+CREATE TABLE Bebida_Ofertada (
+    GestionMenu_Id INT NOT NULL,
+    Bebida_Id INT NOT NULL,
+    Cantidad INT NOT NULL,
+    PRIMARY KEY (GestionMenu_Id, Bebidas_Id),
+    FOREIGN KEY (GestionMenu_Id) REFERENCES GestionMenu(Id),
+    FOREIGN KEY (Bebidas_Id) REFERENCES Bebidas(Id)
+);
+
+-- Tabla Entrada:
+CREATE TABLE Entrada (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    monto DECIMAL(7,2),
+    Estado CHAR(1) NOT NULL
+);
+
+-- Tabla Pagos:
+CREATE TABLE Pagos (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATETIME NOT NULL,
+    montoTotal DECIMAL(7,2),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Comprobante de Pago:
+CREATE TABLE ComprobanteDePago (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    pagoTotal DECIMAL(7,2),
+    tipoPago CHAR(1),
+    Pago_Id INT,
+    FOREIGN KEY (Pago_Id) REFERENCES Pagos(Id)
+);
+
+-- Tabla Empleados_Turnos:
+CREATE TABLE Empleados_Turnos (
+    Empleado_Id INT NOT NULL,
+    Turno_Id INT NOT NULL,
+    PRIMARY KEY (Empleado_Id, Turno_Id),
+    FOREIGN KEY (Empleado_Id) REFERENCES Empleado(Id),
+    FOREIGN KEY (Turno_Id) REFERENCES Turno(Id)
+);
+
+-- Tabla Reserva:
+CREATE TABLE Reserva (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Cliente_Id INT NOT NULL,
+    Entrada_Id INT, --Opcional, porque un cliente puede realizar la reserva a distancia y por lo tanto no tendra en ese momento la entrada.
+    Pago_Id INT, --Opcional, un cliente puede no pagar en ese mismo momento al realizar la reserva. 
+    Fecha DATE NOT NULL,
+    monto DECIMAL(7,2),
+    Cantidad_cupo INT,
+    Estado CHAR(1) NOT NULL,
+    FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id),
+    FOREIGN KEY (Entrada_Id) REFERENCES Entrada(Id),
+    FOREIGN KEY (Pago_Id) REFERENCES Pagos(Id)
+);

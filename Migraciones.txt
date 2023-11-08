@@ -1,0 +1,27 @@
+// Modelos con controladores, migraciones, factories y seeders (datos predefinidos)
+php artisan make:model TipoEmpleado -mcrf
+php artisan make:seeder TipoEmpleadoSeeder
+php artisan make:model Categoria -mcrf
+php artisan make:seeder CategoriaSeeder
+php artisan make:model TipoPlato -mcrf
+php artisan make:seeder TipoPlatoSeeder
+php artisan make:model Turno -mcrf
+php artisan make:seeder TurnoSeeder
+
+// Modelos con controladores, migraciones y factories (datos dinámicos)
+php artisan make:model Persona -mcrf
+php artisan make:model Empleado -mcrf
+php artisan make:model Cliente -mcrf
+php artisan make:model Menu -mcrf
+php artisan make:model Plato -mcrf
+php artisan make:model GestionMenu -mcrf
+php artisan make:model Bebida -mcrf
+php artisan make:model Entrada -mcrf
+php artisan make:model Pago -mcrf
+php artisan make:model ComprobanteDePago -mcrf
+php artisan make:model Reserva -mcrf
+
+// Modelos para las relaciones muchos a muchos (tablas pivot, solo factories para datos de prueba)
+php artisan make:model MenuOfertado -mf
+php artisan make:model BebidaOfertada -mf
+php artisan make:model EmpleadoTurno -mf
