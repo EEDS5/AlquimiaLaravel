@@ -7,59 +7,61 @@ use Illuminate\Http\Request;
 
 class TipoPlatoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Muestra una lista de todos los tipos de plato.
     public function index()
     {
-        //
+        $tipoPlatos = TipoPlato::all();
+        return view('tipoPlatos.index', compact('tipoPlatos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Muestra el formulario para crear un nuevo tipo de plato.
     public function create()
     {
-        //
+        return view('tipoPlatos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacena un nuevo tipo de plato en la base de datos.
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:50',
+            'descripcion' => 'nullable|max:100',
+            'estado' => 'required|boolean',
+        ]);
+
+        TipoPlato::create($validatedData);
+        return redirect('/tipoPlatos')->with('success', 'Tipo de plato creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Muestra un tipo de plato específico.
     public function show(TipoPlato $tipoPlato)
     {
-        //
+        return view('tipoPlatos.show', compact('tipoPlato'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Muestra el formulario para editar un tipo de plato existente.
     public function edit(TipoPlato $tipoPlato)
     {
-        //
+        return view('tipoPlatos.edit', compact('tipoPlato'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualiza un tipo de plato en la base de datos.
     public function update(Request $request, TipoPlato $tipoPlato)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:50',
+            'descripcion' => 'nullable|max:100',
+            'estado' => 'required|boolean',
+        ]);
+
+        $tipoPlato->update($validatedData);
+        return redirect('/tipoPlatos')->with('success', 'Tipo de plato actualizado con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Elimina un tipo de plato de la base de datos.
     public function destroy(TipoPlato $tipoPlato)
     {
-        //
+        $tipoPlato->delete();
+        return redirect('/tipoPlatos')->with('success', 'Tipo de plato eliminado con éxito.');
     }
 }

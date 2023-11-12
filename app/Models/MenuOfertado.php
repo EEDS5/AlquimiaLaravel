@@ -7,5 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class MenuOfertado extends Model
 {
-    // Las relaciones se manejarán a través de los modelos Plato y Menu
+    use HasFactory;
+
+    protected $fillable = ['menu_id', 'plato_id'];
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
+    public function plato()
+    {
+        return $this->belongsTo(Plato::class);
+    }
+
+    public function gestionMenus()
+    {
+        return $this->hasMany(GestionMenu::class);
+    }
 }

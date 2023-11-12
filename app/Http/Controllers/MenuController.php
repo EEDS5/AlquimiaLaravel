@@ -7,59 +7,59 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Muestra una lista de todos los menús.
     public function index()
     {
-        //
+        $menus = Menu::all();
+        return view('menus.index', compact('menus'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Muestra el formulario para crear un nuevo menú.
     public function create()
     {
-        //
+        return view('menus.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacena un nuevo menú en la base de datos.
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:50',
+            'estado' => 'required|boolean',
+        ]);
+
+        Menu::create($validatedData);
+        return redirect('/menus')->with('success', 'Menú creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Muestra un menú específico.
     public function show(Menu $menu)
     {
-        //
+        return view('menus.show', compact('menu'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Muestra el formulario para editar un menú existente.
     public function edit(Menu $menu)
     {
-        //
+        return view('menus.edit', compact('menu'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualiza un menú en la base de datos.
     public function update(Request $request, Menu $menu)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:50',
+            'estado' => 'required|boolean',
+        ]);
+
+        $menu->update($validatedData);
+        return redirect('/menus')->with('success', 'Menú actualizado con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Elimina un menú de la base de datos.
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+        return redirect('/menus')->with('success', 'Menú eliminado con éxito.');
     }
 }

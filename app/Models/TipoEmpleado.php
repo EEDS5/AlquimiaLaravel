@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoEmpleado extends Model
 {
-    protected $fillable = ['rol', 'estado'];
+    use HasFactory;
 
-    public function empleados()
+    protected $fillable = ['descripcion'];
+
+    public function empleado()
     {
         return $this->hasMany(Empleado::class);
     }

@@ -7,59 +7,63 @@ use Illuminate\Http\Request;
 
 class TurnoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Muestra una lista de todos los turnos.
     public function index()
     {
-        //
+        $turnos = Turno::all();
+        return view('turnos.index', compact('turnos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Muestra el formulario para crear un nuevo turno.
     public function create()
     {
-        //
+        return view('turnos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacena un nuevo turno en la base de datos.
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'descripcion' => 'required|max:50',
+            'hora_entrada' => 'required|date_format:H:i',
+            'hora_limite' => 'required|date_format:H:i|after:hora_entrada',
+            'estado' => 'required|boolean',
+        ]);
+
+        Turno::create($validatedData);
+        return redirect('/turnos')->with('success', 'Turno creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Muestra un turno específico.
     public function show(Turno $turno)
     {
-        //
+        return view('turnos.show', compact('turno'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Muestra el formulario para editar un turno existente.
     public function edit(Turno $turno)
     {
-        //
+        return view('turnos.edit', compact('turno'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualiza un turno en la base de datos.
     public function update(Request $request, Turno $turno)
     {
-        //
+        $validatedData = $request->validate([
+            'descripcion' => 'required|max:50',
+            'hora_entrada' => 'required|date_format:H:i',
+            'hora_limite' => 'required|date_format:H:i|after:hora_entrada',
+            'estado' => 'required|boolean',
+        ]);
+
+        $turno->update($validatedData);
+        return redirect('/turnos')->with('success', 'Turno actualizado con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Elimina un turno de la base de datos.
     public function destroy(Turno $turno)
     {
-        //
+        $turno->delete();
+        return redirect('/turnos')->with('success', 'Turno eliminado con éxito.');
     }
 }

@@ -1,21 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Persona;
-use App\Http\Controllers\Cliente;
-use App\Http\Controllers\TipoEmpleado;
-use App\Http\Controllers\Empleado;
-use App\Http\Controllers\TipoPlato;
-use App\Http\Controllers\Plato;
-use App\Http\Controllers\Bebida;
-use App\Http\Controllers\Categoria;
-use App\Http\Controllers\Menu;
-use App\Http\Controllers\Pago;
-use App\Http\Controllers\Reserva;
-use App\Http\Controllers\Turno;
-use App\Http\Controllers\Entrada;
-use App\Http\Controllers\GestionMenu;
-use App\Http\Controllers\ComprobanteDePago;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\TipoEmpleadoController;
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\TipoPlatoController;
+use App\Http\Controllers\PlatoController;
+use App\Http\Controllers\BebidaController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\TurnoController;
+use App\Http\Controllers\EntradaController;
+use App\Http\Controllers\GestionMenuController;
+use App\Http\Controllers\ComprobanteDePagoController;
 
 
 
@@ -34,8 +34,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [ClientController::class, 'login'])->name('login');
-Route::post('/authenticate', [ClientController::class, 'authenticate'])->name('authenticate');
+Route::get('/login', [ClienteController::class, 'login'])->name('login');
+Route::post('/authenticate', [ClienteController::class, 'authenticate'])->name('authenticate');
 
 Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
 Route::post('/logout', [ClientController::class, 'logout'])->name('logout');

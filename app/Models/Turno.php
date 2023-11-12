@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Turno extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['descripcion', 'hora_entrada', 'hora_limite', 'estado'];
 
-    // Si un turno está asociado a muchos empleados
-    public function empleados()
+    public function gestionMenus()
     {
-        return $this->belongsToMany(Empleado::class, 'empleado_turnos');
+        return $this->hasMany(GestionMenu::class);
     }
 }

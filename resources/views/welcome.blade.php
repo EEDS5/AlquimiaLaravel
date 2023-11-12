@@ -57,16 +57,7 @@
     <h1>Restaurante Escuela UDI by Dossier</h1>
     <nav>
         <ul>
-            <li><a href="{{ route('client.create') }}">Crear cliente</a></li>
-            <li><a href= "{{ route('client.store') }}">Ver cliente</a></li>
-            <li><a href= "{{ route('plate.create') }}">Crear platos</a></li>
-            <li><a href="{{ route('plate.store') }}">Ver platos</a></li>
-            <li><a href="{{ route('semester.create') }}">Crear semestre</a></li>
-            <li><a href="{{ route('semester.store') }}">Ver semestre</a></li>
-            <li><a href="{{ route('servingturn.create') }}">Crear turno de servicio</a></li>
-            <li><a href="{{ route('servingturn.store') }}">Ver turno de servicio</a></li>
-            <li><a href="{{ route('reservation.create') }}">Crear reserva</a></li>
-            <li><a href="{{route('login')}}">Login</a></li>
+            <li><a href="{{route('login')}}">Login</a></li>-->
         </ul>
     </nav>
 </header>

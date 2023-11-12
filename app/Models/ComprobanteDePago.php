@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComprobanteDePago extends Model
 {
-    protected $fillable = ['fecha', 'pago_total', 'tipo_pago', 'pago_id'];
+    use HasFactory;
 
-    // Si un comprobante está asociado a un pago
+    protected $fillable = ['fecha', 'pago_total', 'estado', 'pago_id'];
+
     public function pago()
     {
         return $this->belongsTo(Pago::class);

@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoPlato extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['nombre', 'descripcion', 'estado'];
 
-    // Si un tipo de plato está asociado a múltiples platos
-    public function platos()
+    public function gestionMenu()
     {
-        return $this->hasMany(Plato::class);
+        return $this->hasMany(GestionMenu::class);
     }
 }

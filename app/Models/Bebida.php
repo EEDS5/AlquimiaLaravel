@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bebida extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['nombre', 'descripcion', 'imagen', 'estado'];
 
-    // Si una bebida puede estar en múltiples gestiones de menú
-    public function gestionesMenus()
+    public function gestionMenu()
     {
-        return $this->belongsToMany(GestionMenu::class, 'bebida_ofertadas');
+        return $this->belongsToMany(GestionMenu::class, 'bebida_ofertada');
     }
 }

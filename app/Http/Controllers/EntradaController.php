@@ -3,63 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrada;
+use App\Models\Cliente;
+use App\Models\GestionMenu;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 
 class EntradaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $entradas = Entrada::with(['cliente', 'gestionMenu', 'pago'])->get();
+        return view('entradas.index', compact('entradas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        $gestionMenus = GestionMenu::all();
+        // Omitir pagos ya que pueden no estar creados al momento de la entrada
+        return view('entradas.create', compact('clientes', 'gestionMenus'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'gestion_menu_id' => 'required|exists:gestion_menus,id',
+            'pago_id' => 'nullable|exists:pagos,id',
+            'fecha' => 'required|date',
+            'monto' => 'required|numeric',
+            'estado' => 'required|in:T,N',
+        ]);
+
+        Entrada::create($validatedData);
+        return redirect('/entradas')->with('success', 'Entrada creada con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Entrada $entrada)
     {
-        //
+        return view('entradas.show', compact('entrada'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Entrada $entrada)
     {
-        //
+        $clientes = Cliente::all();
+        $gestionMenus = GestionMenu::all();
+        return view('entradas.edit', compact('entrada', 'clientes', 'gestionMenus'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Entrada $entrada)
     {
-        //
+        $validatedData = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'gestion_menu_id' => 'required|exists:gestion_menus,id',
+            'pago_id' => 'nullable|exists:pagos,id',
+            'fecha' => 'required|date',
+            'monto' => 'required|numeric',
+            'estado' => 'required|in:T,N',
+        ]);
+
+        $entrada->update($validatedData);
+        return redirect('/entradas')->with('success', 'Entrada actualizada con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Entrada $entrada)
     {
-        //
+        $entrada->delete();
+        return redirect('/entradas')->with('success', 'Entrada eliminada con éxito.');
     }
 }

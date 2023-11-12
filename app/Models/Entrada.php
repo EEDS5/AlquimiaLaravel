@@ -7,11 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Entrada extends Model
 {
-    protected $fillable = ['fecha', 'monto', 'estado'];
+    use HasFactory;
 
-    // Si una entrada puede estar asociada a muchas reservas
-    public function reservas()
+    protected $fillable = ['cliente_id', 'gestion_menu_id', 'pago_id', 'fecha', 'monto', 'estado'];
+
+    public function cliente()
     {
-        return $this->hasMany(Reserva::class);
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function gestionMenu()
+    {
+        return $this->belongsTo(GestionMenu::class);
+    }
+
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class);
     }
 }

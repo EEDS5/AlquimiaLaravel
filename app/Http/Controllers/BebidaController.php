@@ -6,60 +6,75 @@ use App\Models\Bebida;
 use Illuminate\Http\Request;
 
 class BebidaController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
+{// Muestra una lista de todas las bebidas.
     public function index()
     {
-        //
+        $bebidas = Bebida::all();
+        return view('bebidas.index', compact('bebidas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Muestra el formulario para crear una nueva bebida.
     public function create()
     {
-        //
+        return view('bebidas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacena una nueva bebida en la base de datos.
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:30',
+            'descripcion' => 'nullable|max:30',
+            'imagen' => 'nullable|image|max:1024', // Asumiendo que se subirá una imagen.
+            'estado' => 'required|boolean',
+        ]);
+
+        // Si hay una imagen, procesarla y obtener la ruta para guardarla
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('public/imagenes');
+            $validatedData['imagen'] = $imagenPath;
+        }
+
+        Bebida::create($validatedData);
+        return redirect('/bebidas')->with('success', 'Bebida creada con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Muestra una bebida específica.
     public function show(Bebida $bebida)
     {
-        //
+        return view('bebidas.show', compact('bebida'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Muestra el formulario para editar una bebida existente.
     public function edit(Bebida $bebida)
     {
-        //
+        return view('bebidas.edit', compact('bebida'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualiza una bebida en la base de datos.
     public function update(Request $request, Bebida $bebida)
     {
-        //
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:30',
+            'descripcion' => 'nullable|max:30',
+            'imagen' => 'nullable|image|max:1024',
+            'estado' => 'required|boolean',
+        ]);
+
+        // Si hay una nueva imagen, procesarla y obtener la ruta para guardarla
+        if ($request->hasFile('imagen')) {
+            $imagenPath = $request->file('imagen')->store('public/imagenes');
+            $validatedData['imagen'] = $imagenPath;
+        }
+
+        $bebida->update($validatedData);
+        return redirect('/bebidas')->with('success', 'Bebida actualizada con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Elimina una bebida de la base de datos.
     public function destroy(Bebida $bebida)
     {
-        //
+        $bebida->delete();
+        return redirect('/bebidas')->with('success', 'Bebida eliminada con éxito.');
     }
 }

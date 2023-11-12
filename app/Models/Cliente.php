@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    protected $fillable = [
-        'persona_id', 'fecha_registro', 'razon_social', 'estado'
-    ];
+    use HasFactory;
+
+    protected $fillable = ['persona_id', 'razon_social', 'nit'];
 
     public function persona()
     {
         return $this->belongsTo(Persona::class);
     }
 
-    public function reservas()
+    public function tarjeta()
     {
-        return $this->hasMany(Reserva::class);
+        return $this->hasMany(Tarjeta::class);
     }
 }

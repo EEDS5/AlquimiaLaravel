@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
 {
-    protected $fillable = [
-        'nombre', 'apellido', 'identificacion', 'fecha_nacimiento', 
-        'telefono', 'direccion', 'email', 'estado'
-    ];
+    use HasFactory;
+    
+    protected $fillable = ['tipo_persona_id', 'ci', 'nombre', 'apellido_p', 'apellido_m', 'telefono', 'direccion', 'email', 'estado'];
+
+    public function usuario()
+    {
+        return $this->hasOne(Usuario::class);
+    }
 
     public function empleado()
     {
@@ -20,5 +24,10 @@ class Persona extends Model
     public function cliente()
     {
         return $this->hasOne(Cliente::class);
+    }
+
+    public function tipoPersona()
+    {
+        return $this->belongsTo(TipoPersona::class);
     }
 }

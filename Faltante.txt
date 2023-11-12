@@ -1,0 +1,277 @@
+Tienes que completar y realizar estos modelos de manera completa:
+Reserva, Pago, MenuOfertado, Entrada, ConsumoBebida, ComprobanteDePago
+
+Tienes que completar y realizar estos controladores de manera completa con su lógica como haz realizado anteriormente:
+Reserva, Pago, MenuOfertado, Entrada, ConsumoBebida, ComprobanteDePago, TipoEmpleado
+
+Teniendo en cuenta las tablas de la BD que se tiene:
+-- Tabla TipoPersona:
+CREATE TABLE TipoPersona (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL
+);
+
+-- Tabla Persona:
+CREATE TABLE Persona (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    TipoPersona_Id INT NOT NULL,
+    CI VARCHAR(30) UNIQUE NOT NULL,
+    Nombre VARCHAR(60) NOT NULL,
+    Apellido_P VARCHAR(30) NOT NULL,
+    Apellido_M VARCHAR(30) NOT NULL,
+    Telefono VARCHAR(30) UNIQUE,
+    Direccion VARCHAR(50),
+    Email VARCHAR(30) UNIQUE NOT NULL,
+    Estado BOOLEAN NOT NULL,
+
+    FOREIGN KEY (TipoPersona_Id) REFERENCES TipoPersona(Id),
+);
+
+-- Tabla Usuario:
+CREATE TABLE Usuario (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL, 
+    Contraseña VARCHAR(255) NOT NULL,
+    Estado BOOLEAN NOT NULL,
+
+    FOREIGN KEY (Id) REFERENCES Persona(Id)
+);
+
+-- Tabla TipoEmpleado:
+CREATE TABLE TipoEmpleado (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL
+);
+
+-- Tabla Empleado:
+CREATE TABLE Empleado (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Persona_Id INT NOT NULL,
+    TipoEmpleado_Id INT NOT NULL,
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE,
+    Estado BOOLEAN NOT NULL,
+
+    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id),
+    FOREIGN KEY (TipoEmpleado_Id) REFERENCES TipoEmpleado(Id)
+);
+
+-- Tabla Cliente:
+CREATE TABLE Cliente (
+    Id INT PRIMARY KEY,
+    Persona_Id INT NOT NULL,
+    RazonSocial VARCHAR(50),
+    NIT VARCHAR(50),
+
+    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id)
+);
+
+-- Tabla Tarjeta
+CREATE TABLE Tarjeta (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Cliente_Id INT NOT NULL,
+    nroTarjeta VARCHAR(50) UNIQUE NOT NULL,
+    entidadBancaria CHAR(50) NOT NULL,
+    fechaVencimiento DATE NOT NULL,
+    
+    FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id)
+);
+
+-- Tabla Menu:
+CREATE TABLE Menu (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Plato:
+CREATE TABLE Plato (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Imagen VARCHAR(255),
+    Descripcion VARCHAR(100),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Menu_Ofertado:
+CREATE TABLE Menu_Ofertado (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Menu_Id INT NOT NULL,
+    Plato_Id INT NOT NULL,
+
+    FOREIGN KEY (Menu_Id) REFERENCES Menu(Id),
+    FOREIGN KEY (Plato_Id) REFERENCES Plato(Id)
+);
+
+-- Tabla Categoria:
+CREATE TABLE Categoria (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Tipo de Plato:
+CREATE TABLE TipoPlato (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(100),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Turno:
+CREATE TABLE Turno (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(50) NOT NULL,
+    HoraEntrada TIME NOT NULL,
+    HoraLimite TIME NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla GestionMenu:
+CREATE TABLE GestionMenu (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Categoria_Id NOT NULL,
+    Semestre_Id INT NOT NULL,
+    TipoPlato_Id INT NOT NULL, 
+    Turno_Id INT NOT NULL,
+    Menu_Ofertado_Id INT NOT NULL,
+    Descripcion VARCHAR(50) NOT NULL,
+    Imagen VARCHAR(255),
+    Costo DECIMAL(6,2) NOT NULL,
+    totalCupo INT NOT NULL,
+    cupoDisponible INT NOT NULL,
+    Fecha DATETIME NOT NULL,
+    Estado ENUM('A', 'I') NOT NULL
+
+    FOREIGN KEY (Categoria_Id) REFERENCES Categoria(Id),
+    FOREIGN KEY (Semestre_Id) REFERENCES Semestre(Id),
+    FOREIGN KEY (TipoPlato_Id) REFERENCES TipoPlato(Id),
+    FOREIGN KEY (Turno_Id) REFERENCES Turno(Id),
+    FOREIGN KEY (Menu_Ofertado_Id) REFERENCES Menu_Ofertado(Id)
+);
+
+-- Tabla Semestre
+CREATE TABLE Semestre (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre CHAR(50) NOT NULL,
+    FechaInicio DATE NOT NULL,
+    FechaFinal DATE NOT NULL,
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla Bebidas:
+CREATE TABLE Bebidas (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(30) NOT NULL,
+    Descripcion VARCHAR(30),
+    Imagen VARCHAR(50),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla BebidaOfertada:
+CREATE TABLE BebidaOfertada (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    GestionMenu_Id INT NOT NULL,
+    Bebida_Id INT NOT NULL,
+    Cantidad INT NOT NULL,
+
+    FOREIGN KEY (GestionMenu_Id) REFERENCES GestionMenu(Id),
+    FOREIGN KEY (Bebidas_Id) REFERENCES Bebidas(Id)
+);
+
+-- Tabla Entrada:
+CREATE TABLE Entrada (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Cliente_Id INT NOT NULL,
+    GestionMenu_Id INT NOT NULL,
+    Pago_Id INT,
+    Fecha DATE NOT NULL,
+    monto DECIMAL(7,2),
+    Estado ENUM('T', 'N') NOT NULL,
+
+    FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id),
+    FOREIGN KEY (GestionMenu_Id) REFERENCES GestionMenu(Id),
+    FOREIGN KEY (Pago_Id) REFERENCES Pago(Id)
+);
+
+-- Tabla Pago:
+CREATE TABLE Pago (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATETIME NOT NULL,
+    montoTotal DECIMAL(7,2),
+    Estado BOOLEAN NOT NULL
+);
+
+-- Tabla ConsumoBebida:
+CREATE TABLE ConsumoBebida (
+    BebidaOfertada_Id INT NOT NULL,
+    Pago_Id INT NOT NULL,
+    Cantidad INT NOT NULL,
+    Precio DECIMAL(7,2),
+    PRIMARY KEY (BebidaOfertada_Id, Pago_Id),
+
+    FOREIGN KEY (BebidaOfertada_Id) REFERENCES BebidaOfertada(Id),
+    FOREIGN KEY (Pago_Id) REFERENCES Pago(Id)
+);
+
+-- Tabla Comprobante de Pago:
+CREATE TABLE ComprobanteDePago (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    pagoTotal DECIMAL(7,2),
+    Estado ENUM('T', 'E', 'Q') NOT NULL,
+    Pago_Id INT,
+
+    FOREIGN KEY (Pago_Id) REFERENCES Pagos(Id)
+);
+
+-- Tabla Reserva:
+CREATE TABLE Reserva (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Cliente_Id INT NOT NULL,
+    Persona_Id INT NOT NULL,
+    Entrada_Id INT, --Opcional, porque un cliente puede realizar la reserva a distancia y por lo tanto no tendra en ese momento la entrada.
+    Pago_Id INT, --Opcional, un cliente puede no pagar en ese mismo momento al realizar la reserva. 
+    Fecha DATE NOT NULL,
+    monto DECIMAL(7,2),
+    Cantidad_cupo INT,
+    Estado ENUM('A', 'P', 'C') NOT NULL,
+
+    FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id),
+    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id),
+    FOREIGN KEY (Entrada_Id) REFERENCES Entrada(Id),
+    FOREIGN KEY (Pago_Id) REFERENCES Pago(Id)
+);
+
+Y de acuerdo con los nombres de la convención que se tiene de las Migraciones:
+// Modelos con controladores, migraciones, factories y seeders (datos predefinidos)
+php artisan make:model TipoEmpleado -mcrf
+php artisan make:seeder TipoEmpleadoSeeder
+php artisan make:model Categoria -mcrf
+php artisan make:seeder CategoriaSeeder
+php artisan make:model TipoPlato -mcrf
+php artisan make:seeder TipoPlatoSeeder
+php artisan make:model Turno -mcrf
+php artisan make:seeder TurnoSeeder
+
+// Modelos con controladores, migraciones y factories (datos dinámicos)
+php artisan make:model TipoPersona -mcrf
+php artisan make:model Persona -mcrf
+php artisan make:model Usuario -mcrf
+php artisan make:model Empleado -mcrf
+php artisan make:model Cliente -mcrf
+php artisan make:model Tarjeta -mcrf
+php artisan make:model Menu -mcrf
+php artisan make:model Plato -mcrf
+php artisan make:model GestionMenu -mcrf
+php artisan make:model Semestre -mcrf
+php artisan make:model Bebida -mcrf
+php artisan make:model Entrada -mcrf
+php artisan make:model Pago -mcrf
+php artisan make:model ComprobanteDePago -mcrf
+php artisan make:model Reserva -mcrf
+
+// Modelos para las relaciones muchos a muchos (tablas pivot, solo factories para datos de prueba)
+php artisan make:model MenuOfertado -mf
+php artisan make:model BebidaOfertada -mf
+php artisan make:model ConsumoBebida -mf

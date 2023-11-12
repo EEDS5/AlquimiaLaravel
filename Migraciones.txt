@@ -9,12 +9,16 @@ php artisan make:model Turno -mcrf
 php artisan make:seeder TurnoSeeder
 
 // Modelos con controladores, migraciones y factories (datos dinámicos)
+php artisan make:model TipoPersona -mcrf
 php artisan make:model Persona -mcrf
+php artisan make:model Usuario -mcrf
 php artisan make:model Empleado -mcrf
 php artisan make:model Cliente -mcrf
+php artisan make:model Tarjeta -mcrf
 php artisan make:model Menu -mcrf
 php artisan make:model Plato -mcrf
 php artisan make:model GestionMenu -mcrf
+php artisan make:model Semestre -mcrf
 php artisan make:model Bebida -mcrf
 php artisan make:model Entrada -mcrf
 php artisan make:model Pago -mcrf
@@ -24,4 +28,4 @@ php artisan make:model Reserva -mcrf
 // Modelos para las relaciones muchos a muchos (tablas pivot, solo factories para datos de prueba)
 php artisan make:model MenuOfertado -mf
 php artisan make:model BebidaOfertada -mf
-php artisan make:model EmpleadoTurno -mf
+php artisan make:model ConsumoBebida -mf

@@ -3,63 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserva;
+use App\Models\Cliente;
+use App\Models\Persona;
+use App\Models\Entrada;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $reservas = Reserva::with(['cliente', 'persona', 'entrada', 'pago'])->get();
+        return view('reservas.index', compact('reservas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        // Aquí deberás cargar las relaciones necesarias para el formulario de creación
+        return view('reservas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'persona_id' => 'required|exists:personas,id',
+            'entrada_id' => 'nullable|exists:entradas,id',
+            'pago_id' => 'nullable|exists:pagos,id',
+            'fecha' => 'required|date',
+            'monto' => 'required|numeric',
+            'cantidad_cupo' => 'required|integer',
+            'estado' => 'required', // Validar según los valores de tu enum
+        ]);
+
+        Reserva::create($validatedData);
+        return redirect('/reservas')->with('success', 'Reserva creada con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Reserva $reserva)
     {
-        //
+        return view('reservas.show', compact('reserva'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Reserva $reserva)
     {
-        //
+        // Cargar las relaciones necesarias para el formulario de edición
+        return view('reservas.edit', compact('reserva'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Reserva $reserva)
     {
-        //
+        $validatedData = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'persona_id' => 'required|exists:personas,id',
+            'entrada_id' => 'nullable|exists:entradas,id',
+            'pago_id' => 'nullable|exists:pagos,id',
+            'fecha' => 'required|date',
+            'monto' => 'required|numeric',
+            'cantidad_cupo' => 'required|integer',
+            'estado' => 'required', // Validar según los valores de tu enum
+        ]);
+
+        $reserva->update($validatedData);
+        return redirect('/reservas')->with('success', 'Reserva actualizada con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Reserva $reserva)
     {
-        //
+        $reserva->delete();
+        return redirect('/reservas')->with('success', 'Reserva eliminada con éxito.');
     }
 }

@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class BebidaOfertada extends Model
 {
-    // Las relaciones se manejarán a través de los modelos Bebida y GestionMenu
+    use HasFactory;
+
+    protected $fillable = ['gestion_menu_id', 'bebida_id', 'cantidad'];
+
+    public function gestionMenu()
+    {
+        return $this->belongsTo(GestionMenu::class);
+    }
+
+    public function bebida()
+    {
+        return $this->belongsTo(Bebida::class);
+    }
 }

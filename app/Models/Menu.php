@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['nombre', 'estado'];
 
-    public function platos()
+    public function plato()
     {
-        return $this->belongsToMany(Plato::class, 'menu_ofertados');
+        return $this->belongsToMany(Plato::class, 'menu_ofertado');
     }
 }

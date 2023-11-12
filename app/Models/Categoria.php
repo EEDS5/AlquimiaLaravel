@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categoria extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['descripcion', 'estado'];
 
-    // Si una categoría puede estar asociada a muchas gestiones de menú
-    public function gestionesMenus()
+    public function gestionMenu()
     {
         return $this->hasMany(GestionMenu::class);
     }

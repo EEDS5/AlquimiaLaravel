@@ -3,57 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoEmpleado;
-use App\Models\Empleado;
 use Illuminate\Http\Request;
 
 class TipoEmpleadoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $tipos = TipoEmpleado::all();
-        return view('tipo_empleados.index', compact('tipos'));
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('tipo_empleados.create');
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'rol' => 'required|max:50',
-            'estado' => 'required|boolean'
-        ]);
-
-        TipoEmpleado::create($validatedData);
-        return redirect('/tipo_empleados')->with('success', 'Tipo de empleado creado correctamente.');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(TipoEmpleado $tipoEmpleado)
     {
-        return view('tipo_empleados.show', compact('tipoEmpleado'));
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(TipoEmpleado $tipoEmpleado)
     {
-        return view('tipo_empleados.edit', compact('tipoEmpleado'));
+        //
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, TipoEmpleado $tipoEmpleado)
     {
-        $validatedData = $request->validate([
-            'rol' => 'required|max:50',
-            'estado' => 'required|boolean'
-        ]);
-
-        $tipoEmpleado->update($validatedData);
-        return redirect('/tipo_empleados')->with('success', 'Tipo de empleado actualizado correctamente.');
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(TipoEmpleado $tipoEmpleado)
     {
-        $tipoEmpleado->delete();
-        return redirect('/tipo_empleados')->with('success', 'Tipo de empleado eliminado correctamente.');
+        //
     }
 }
