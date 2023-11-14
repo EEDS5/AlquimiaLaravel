@@ -18,8 +18,11 @@ return new class extends Migration
             $table->date('fecha_fin');
             $table->boolean('estado');
             $table->timestamps();
-        });        
+        });  
+      
     }
+
+    
 
     /**
      * Reverse the migrations.

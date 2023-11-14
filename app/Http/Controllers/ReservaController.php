@@ -13,8 +13,12 @@ class ReservaController extends Controller
 {
     public function index()
     {
-        $reservas = Reserva::with(['cliente', 'persona', 'entrada', 'pago'])->get();
-        return view('reservas.index', compact('reservas'));
+        
+        return view('dashboard');
+
+
+        // $reservas = Reserva::with(['cliente', 'persona', 'entrada', 'pago'])->get();
+        // return view('reservas.index', compact('reservas'));
     }
 
     public function create()
@@ -73,4 +77,11 @@ class ReservaController extends Controller
         $reserva->delete();
         return redirect('/reservas')->with('success', 'Reserva eliminada con éxito.');
     }
+
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
+   
 }

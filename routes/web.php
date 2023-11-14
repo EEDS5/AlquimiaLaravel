@@ -16,8 +16,8 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\GestionMenuController;
 use App\Http\Controllers\ComprobanteDePagoController;
-
-
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +34,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [ClienteController::class, 'login'])->name('login');
-Route::post('/authenticate', [ClienteController::class, 'authenticate'])->name('authenticate');
+
+
+Route::get('/register', [ClienteController::class, 'index'])->name('register');
+Route::post('/register', [ClienteController::class, 'store']);
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store']);
+Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
+
+Route::get('/reserva', [ReservaController::class, 'index'])->name('reserva.index');
+
 
 Route::get('/dashboard', [ClientController::class, 'dashboard'])->name('dashboard');
-Route::post('/logout', [ClientController::class, 'logout'])->name('logout');
+
 
 Route::get('/persona', [Persona::class, 'index'])->name('persona.index');
 Route::get('/persona/create', [Persona::class, 'create'])->name('persona.create');

@@ -9,6 +9,9 @@ class Usuario extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+    public $incrementing=false;
+
     protected $fillable = ['username', 'contraseña', 'estado'];
 
     public function persona()
