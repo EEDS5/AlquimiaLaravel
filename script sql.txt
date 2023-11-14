@@ -51,12 +51,11 @@ CREATE TABLE Empleado (
 
 -- Tabla Cliente:
 CREATE TABLE Cliente (
-    Id INT PRIMARY KEY,
-    Persona_Id INT NOT NULL,
+    Id INT NOT NULL PRIMARY KEY,
     RazonSocial VARCHAR(50),
     NIT VARCHAR(50),
 
-    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id)
+    FOREIGN KEY (Id) REFERENCES Persona(Id)
 );
 
 -- Tabla Tarjeta
