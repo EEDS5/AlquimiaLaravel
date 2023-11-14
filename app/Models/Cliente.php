@@ -9,7 +9,7 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['persona_id', 'razon_social', 'nit'];
+    protected $fillable = ['razon_social', 'nit'];
 
     public function persona()
     {

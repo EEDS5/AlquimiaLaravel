@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('empleados', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('persona_id')->constrained('personas');
+            $table->foreignId('id')->constrained('personas');
             $table->foreignId('tipo_empleado_id')->constrained('tipo_empleados');
             $table->date('fecha_inicio');
-            $table->date('fecha_fin')->nullable();
+            $table->date('fecha_fin');
             $table->boolean('estado');
             $table->timestamps();
-        });        
+        });  
+      
     }
+
+    
 
     /**
      * Reverse the migrations.
