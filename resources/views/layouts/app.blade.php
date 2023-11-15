@@ -24,6 +24,9 @@
                   <li class="nav-item"><a class="nav-link" href="">Docentes</a></li>
                   <li class="nav-item"><a class="nav-link" href="">Galeria</a></li>
                   <li class="nav-item"><a class="nav-link" href="">Reserva</a></li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('tipoPlatos.index') }}">Tipos de Plato</a>
+                </li>
               </ul>
 
               @guest

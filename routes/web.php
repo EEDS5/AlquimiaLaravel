@@ -82,6 +82,12 @@ Route::put('/empleado/{id}', [Empleado::class, 'update'])->name('empleado.update
 Route::delete('/empleado/{id}', [Empleado::class, 'destroy'])->name('empleado.destroy');
 
 
+Route::get('/tipoPlatos', [TipoPlatoController::class, 'index']);
+Route::get('/tipoPlatos/create', [TipoPlatoController::class, 'create'])->name('tipoPlatos.create');
+Route::post('/tipoPlatos', [TipoPlatoController::class, 'store'])->name('tipoPlatos.store');
+Route::resource('tipoPlatos', TipoPlatoController::class);
+
+
 
 
 
