@@ -3,63 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\ComprobanteDePago;
+use App\Models\Pago;
 use Illuminate\Http\Request;
 
 class ComprobanteDePagoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $comprobantes = ComprobanteDePago::with('pago')->get();
+        return view('comprobantes.index', compact('comprobantes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $pagos = Pago::all();
+        return view('comprobantes.create', compact('pagos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'pago_total' => 'required|numeric',
+            'estado' => 'required|in:T,E,Q',
+            'pago_id' => 'required|exists:pagos,id',
+        ]);
+
+        ComprobanteDePago::create($validatedData);
+        return redirect('/comprobantes')->with('success', 'Comprobante de pago creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ComprobanteDePago $comprobanteDePago)
     {
-        //
+        return view('comprobantes.show', compact('comprobanteDePago'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(ComprobanteDePago $comprobanteDePago)
     {
-        //
+        $pagos = Pago::all();
+        return view('comprobantes.edit', compact('comprobanteDePago', 'pagos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, ComprobanteDePago $comprobanteDePago)
     {
-        //
+        $validatedData = $request->validate([
+            'fecha' => 'required|date',
+            'pago_total' => 'required|numeric',
+            'estado' => 'required|in:T,E,Q',
+            'pago_id' => 'required|exists:pagos,id',
+        ]);
+
+        $comprobanteDePago->update($validatedData);
+        return redirect('/comprobantes')->with('success', 'Comprobante de pago actualizado con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(ComprobanteDePago $comprobanteDePago)
     {
-        //
+        $comprobanteDePago->delete();
+        return redirect('/comprobantes')->with('success', 'Comprobante de pago eliminado con éxito.');
     }
 }

@@ -7,59 +7,50 @@ use Illuminate\Http\Request;
 
 class TipoEmpleadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tipoEmpleados = TipoEmpleado::all();
+        return view('tipoEmpleados.index', compact('tipoEmpleados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('tipoEmpleados.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'descripcion' => 'required|max:50',
+        ]);
+
+        TipoEmpleado::create($validatedData);
+        return redirect('/tipoEmpleados')->with('success', 'Tipo de empleado creado con éxito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(TipoEmpleado $tipoEmpleado)
     {
-        //
+        return view('tipoEmpleados.show', compact('tipoEmpleado'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(TipoEmpleado $tipoEmpleado)
     {
-        //
+        return view('tipoEmpleados.edit', compact('tipoEmpleado'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, TipoEmpleado $tipoEmpleado)
     {
-        //
+        $validatedData = $request->validate([
+            'descripcion' => 'required|max:50',
+        ]);
+
+        $tipoEmpleado->update($validatedData);
+        return redirect('/tipoEmpleados')->with('success', 'Tipo de empleado actualizado con éxito.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(TipoEmpleado $tipoEmpleado)
     {
-        //
+        $tipoEmpleado->delete();
+        return redirect('/tipoEmpleados')->with('success', 'Tipo de empleado eliminado con éxito.');
     }
 }

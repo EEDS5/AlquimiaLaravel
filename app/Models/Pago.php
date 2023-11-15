@@ -11,22 +11,22 @@ class Pago extends Model
 
     protected $fillable = ['fecha', 'monto_total', 'estado'];
 
-    public function comprobantes()
+    public function comprobante()
     {
         return $this->hasMany(ComprobanteDePago::class);
     }
 
-    public function reservas()
+    public function reserva()
     {
         return $this->hasMany(Reserva::class);
     }
 
-    public function entradas()
+    public function entrada()
     {
         return $this->hasMany(Entrada::class);
     }
 
-    public function consumoBebidas()
+    public function consumoBebida()
     {
         return $this->hasMany(ConsumoBebida::class);
     }

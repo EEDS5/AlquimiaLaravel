@@ -13,21 +13,26 @@ class Persona extends Model
 
     public function usuario()
     {
-        return $this->hasOne(Usuario::class);
+        return $this->hasOne(Usuario::class, 'id');
     }
 
     public function empleado()
     {
-        return $this->hasOne(Empleado::class);
+        return $this->hasOne(Empleado::class, 'id');
     }
 
     public function cliente()
     {
-        return $this->hasOne(Cliente::class);
+        return $this->hasOne(Cliente::class, 'id');
+    }
+
+    public function reserva()
+    {
+        return $this->hasMany(Reserva::class, 'persona_id');
     }
 
     public function tipoPersona()
     {
-        return $this->belongsTo(TipoPersona::class);
+        return $this->belongsTo(TipoPersona::class, 'tipo_persona_id');
     }
 }

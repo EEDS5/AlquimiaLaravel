@@ -12,7 +12,7 @@ CREATE TABLE Persona (
     Nombre VARCHAR(60) NOT NULL,
     Apellido_P VARCHAR(30) NOT NULL,
     Apellido_M VARCHAR(30) NOT NULL,
-    Telefono VARCHAR(30) UNIQUE,
+    Telefono VARCHAR(30) UNIQUE NOT NULL,
     Direccion VARCHAR(50),
     Email VARCHAR(30) UNIQUE NOT NULL,
     Estado BOOLEAN NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Persona (
 
 -- Tabla Usuario:
 CREATE TABLE Usuario (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Id INT PRIMARY KEY NOT NULL,
     Username VARCHAR(50) UNIQUE NOT NULL, 
     Contraseña VARCHAR(255) NOT NULL,
     Estado BOOLEAN NOT NULL,
@@ -38,22 +38,21 @@ CREATE TABLE TipoEmpleado (
 
 -- Tabla Empleado:
 CREATE TABLE Empleado (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Persona_Id INT NOT NULL,
+    Id INT NOT NULL PRIMARY KEY,
     TipoEmpleado_Id INT NOT NULL,
     FechaInicio DATE NOT NULL,
-    FechaFin DATE,
+    FechaFin DATE NOT NULL,
     Estado BOOLEAN NOT NULL,
 
-    FOREIGN KEY (Persona_Id) REFERENCES Persona(Id),
+    FOREIGN KEY (Id) REFERENCES Persona(Id),
     FOREIGN KEY (TipoEmpleado_Id) REFERENCES TipoEmpleado(Id)
 );
 
 -- Tabla Cliente:
 CREATE TABLE Cliente (
     Id INT NOT NULL PRIMARY KEY,
-    RazonSocial VARCHAR(50),
-    NIT VARCHAR(50),
+    RazonSocial VARCHAR(50) NOT NULL,
+    NIT VARCHAR(50) NOT NULL,
 
     FOREIGN KEY (Id) REFERENCES Persona(Id)
 );

@@ -15,11 +15,21 @@ class Cliente extends Model
 
     public function persona()
     {
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Persona::class, 'id');
     }
 
     public function tarjeta()
     {
         return $this->hasMany(Tarjeta::class);
+    }
+
+    public function reserva()
+    {
+        return $this->hasMany(Reserva::class);
+    }
+
+    public function entrada()
+    {
+        return $this->hasMany(Entrada::class);
     }
 }
