@@ -9,9 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable {
-   
-
+    
     protected $table = 'usuarios';
+    
+    public function getAuthPassword()
+    {
+        return $this->contraseña;
+    }
+
+    
+
 
     protected $fillable = [
         'username',
@@ -22,5 +29,6 @@ class User extends Authenticatable {
         'contraseña',
         'remember_token',
     ];
+
     
 }

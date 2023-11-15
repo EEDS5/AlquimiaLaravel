@@ -9,7 +9,7 @@ class Plato extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'imagen', 'descripcion', 'estado'];
+    protected $fillable = ['id','nombre', 'imagen', 'descripcion', 'estado'];
 
     public function menu()
     {
