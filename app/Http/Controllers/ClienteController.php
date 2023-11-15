@@ -51,33 +51,54 @@ class ClienteController extends Controller
             'password' => 'required|string|max:50|confirmed',
         ]);
 
-        // Crea una nueva persona en la base de datos
+       
+
+        // Crear Persona
         $persona = Persona::create([
-            'ci' => $request->input('ci'),
-            'nombre' => $request->input('nombre'),
-            'apellido_p' => $request->input('apellido_p'),
-            'apellido_m' => $request->input('apellido_m'),
-            'telefono' => $request->input('telefono'),
-            'direccion' => $request->input('direccion'),
-            'email' => $request->input('email'),
+            'tipo_persona_id' => $request->tipo_persona_id,
+            'ci' => $request->ci,
+            'nombre' => $request->nombre,
+            'apellido_p' => $request->apellido_p,
+            'apellido_m' => $request->apellido_m,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'email' => $request->email,
             'tipo_persona_id' => 1,
-            'estado' => true, 
+            'estado' => true,
+
         ]);
 
-        // Crea un nuevo usuario asociado a la persona
-        $usuario = Usuario::create([
-            'persona_id' => $persona->id,
-            'username' => $request->input('username'),
-            'contraseña' => Hash::make($request->password), // ¡Recuerda cambiar esto!
-            'estado' => true, // Puedes establecer el estado por defecto
+        // Verificar si se va a registrar un usuario o un cliente
+        if ($request->has('username')) {
+            // Crear Usuario
+            $usuario = new Usuario([
+                'id' => $persona->id, // Asegurarse de que el id de usuario es el mismo que el de persona
+                'username' => $request->username,
+                'contraseña' => bcrypt($request->contraseña), // Encriptar la contraseña
+                'estado' => true,
+            ]);
+            $usuario->save();
+        }
+
+        if ($request->has('razon_social')) {
+            // Crear Cliente
+            $cliente = new Cliente([
+                'id' => $persona->id, // Asegurarse de que el id de cliente es el mismo que el de persona
+                'razon_social' => $request->razon_social,
+                'nit' => $request->nit,
+            ]);
+            $cliente->save();
+        }
+
+        // Devolver una respuesta adecuada
+        return response()->json([
+            'message' => 'Registro exitoso',
+            'persona' => $persona,
+            'usuario' => $usuario ?? null,
+            'cliente' => $cliente ?? null,
         ]);
-        // Crea un nuevo cliente asociado a la persona
-        $cliente = Cliente::create([
-            'persona_id' => $persona->id,
-            'razon_social' => $request->input('razon_social'),
-            'nit' => $request->input('nit'),
-            // Otros campos de Cliente
-        ]);
+
+        
 
         return redirect('welcome')->with('success', 'Cliente registrado con éxito.');
 
