@@ -48,7 +48,7 @@ class ClienteController extends Controller
 
             // Reglas de validación para el campo de Usuario
             'username' => 'required|string|max:50|unique:usuarios',
-            'contraseña' => 'required|string|max:50|confirmed',
+            'password' => 'required|string|max:50|confirmed',
         ]);
 
        

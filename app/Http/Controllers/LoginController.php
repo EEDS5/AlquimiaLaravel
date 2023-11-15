@@ -21,12 +21,12 @@ class LoginController extends Controller
     {
         $this->validate($request, [
             'username' => 'required',
-            'contraseña' => 'required',
+            'password' => 'required',
         ]);
 
         $user = User::where('username', $request->username)->first();
 
-        if (!$user || !Hash::check($request->contraseña, $user->contraseña)) {
+        if (!$user || !Hash::check($request->password, $user->contraseña)) {
             return back()->with('mensaje', 'Credenciales no válidas');
         }
 
