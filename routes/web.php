@@ -18,6 +18,7 @@ use App\Http\Controllers\GestionMenuController;
 use App\Http\Controllers\ComprobanteDePagoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Models\Plato;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,16 @@ Route::get('/empleado/{id}', [Empleado::class, 'show'])->name('empleado.show');
 Route::get('/empleado/{id}/edit', [Empleado::class, 'edit'])->name('empleado.edit');
 Route::put('/empleado/{id}', [Empleado::class, 'update'])->name('empleado.update');
 Route::delete('/empleado/{id}', [Empleado::class, 'destroy'])->name('empleado.destroy');
+
+Route::get('/plato', [PlatoController::class, 'index'])->name('platos.index');
+Route::get('/plato/create', [PlatoController::class, 'create'])->name('platos.create');
+Route::post('/plato', [PlatoController::class, 'store'])->name('platos.store');
+Route::get('/plato/{plato}', [PlatoController::class, 'show'])->name('platos.show');
+Route::get('/plato/{plato}/edit', [PlatoController::class, 'edit'])->name('platos.edit');
+Route::put('/plato/{plato}', [PlatoController::class, 'update'])->name('platos.update');
+Route::delete('/plato/{plato}', [PlatoController::class, 'destroy'])->name('platos.destroy');
+
+
 
 
 Route::get('/tipoPlatos', [TipoPlatoController::class, 'index']);
