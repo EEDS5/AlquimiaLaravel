@@ -1,0 +1,32 @@
+Migración de Persona:
+Schema::create('personas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tipo_persona_id')->constrained('tipo_personas');
+            $table->string('ci', 30)->unique();
+            $table->string('nombre', 60);
+            $table->string('apellido_p', 30);
+            $table->string('apellido_m', 30);
+            $table->string('telefono', 30)->unique();
+            $table->string('direccion', 50)->nullable();
+            $table->string('email', 30)->unique();
+            $table->boolean('estado');
+            $table->timestamps();
+        }); 
+
+Migración de Empleado:
+Schema::create('empleados', function (Blueprint $table) {
+            $table->foreignId('id')->constrained('personas');
+            $table->foreignId('tipo_empleado_id')->constrained('tipo_empleados');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->boolean('estado');
+            $table->timestamps();
+        });  
+
+Migración de Cliente
+Schema::create('clientes', function (Blueprint $table) {
+            $table->foreignId('id')->constrained('personas');
+            $table->string('razon_social', 50)->nullable();
+            $table->string('nit', 50)->nullable();
+            $table->timestamps();
+        });  
