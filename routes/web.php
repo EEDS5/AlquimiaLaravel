@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\TipoEmpleadoController;
+use App\Http\Controllers\TipoPersonaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\TipoPlatoController;
 use App\Http\Controllers\PlatoController;
@@ -87,6 +87,13 @@ Route::get('/tipoPlatos/create', [TipoPlatoController::class, 'create'])->name('
 Route::post('/tipoPlatos', [TipoPlatoController::class, 'store'])->name('tipoPlatos.store');
 Route::resource('tipoPlatos', TipoPlatoController::class);
 
+// Rutas para Categoria
+Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias.index');
+Route::get('/categorias/create', [CategoriaController::class, 'create'])->name('categorias.create');
+Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
+Route::get('/categorias/{categoria}/edit', [CategoriaController::class, 'edit'])->name('categorias.edit');
+Route::put('/categorias/{categoria}', [CategoriaController::class, 'update'])->name('categorias.update');
+Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
 
 
 

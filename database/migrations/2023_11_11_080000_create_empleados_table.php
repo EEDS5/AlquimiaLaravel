@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->foreignId('id')->constrained('personas');
-            $table->foreignId('tipo_empleado_id')->constrained('tipo_empleados');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->boolean('estado');

@@ -1,6 +1,6 @@
 // Modelos con controladores, migraciones, factories y seeders (datos predefinidos)
-php artisan make:model TipoEmpleado -mcrf
-php artisan make:seeder TipoEmpleadoSeeder
+php artisan make:model TipoEmpleado -mcrf (omitir)
+php artisan make:seeder TipoEmpleadoSeeder (omitir)
 php artisan make:model Categoria -mcrf
 php artisan make:seeder CategoriaSeeder
 php artisan make:model TipoPlato -mcrf

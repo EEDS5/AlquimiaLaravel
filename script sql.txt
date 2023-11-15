@@ -30,12 +30,6 @@ CREATE TABLE Usuario (
     FOREIGN KEY (Id) REFERENCES Persona(Id)
 );
 
--- Tabla TipoEmpleado:
-CREATE TABLE TipoEmpleado (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Descripcion VARCHAR(50) NOT NULL
-);
-
 -- Tabla Empleado:
 CREATE TABLE Empleado (
     Id INT NOT NULL PRIMARY KEY,

@@ -15,9 +15,4 @@ class Empleado extends Model
     {
         return $this->belongsTo(Persona::class);
     }
-
-    public function tipoEmpleado()
-    {
-        return $this->belongsTo(TipoEmpleado::class);
-    }
 }

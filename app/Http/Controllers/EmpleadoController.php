@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\Persona;
-use App\Models\TipoEmpleado;
 use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller

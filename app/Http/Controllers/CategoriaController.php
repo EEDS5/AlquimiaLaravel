@@ -23,19 +23,17 @@ class CategoriaController extends Controller
     // Almacena una nueva categoría en la base de datos.
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'descripcion' => 'required|max:50',
-            'estado' => 'required|boolean',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'descripcion' => 'required|max:50',
+                'estado' => 'required|boolean',
+            ]);
 
-        Categoria::create($validatedData);
-        return redirect('/categorias')->with('success', 'Categoría creada con éxito.');
-    }
-
-    // Muestra una categoría específica.
-    public function show(Categoria $categoria)
-    {
-        return view('categorias.show', compact('categoria'));
+            Categoria::create($validatedData);
+            return redirect('/categorias')->with('success', 'Categoría creada con éxito.');
+        } catch (\Exception $e) {
+            return redirect('/categorias')->with('error', 'Hubo un error al crear la categoría: ' . $e->getMessage());
+        }
     }
 
     // Muestra el formulario para editar una categoría existente.
@@ -47,19 +45,28 @@ class CategoriaController extends Controller
     // Actualiza una categoría en la base de datos.
     public function update(Request $request, Categoria $categoria)
     {
-        $validatedData = $request->validate([
-            'descripcion' => 'required|max:50',
-            'estado' => 'required|boolean',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'descripcion' => 'required|max:50',
+                'estado' => 'required|boolean',
+            ]);
 
-        $categoria->update($validatedData);
-        return redirect('/categorias')->with('success', 'Categoría actualizada con éxito.');
+            $categoria->update($validatedData);
+            return redirect('/categorias')->with('success', 'Categoría actualizada con éxito.');
+        } catch (\Exception $e) {
+            return redirect('/categorias')->with('error', 'Hubo un error al actualizar la categoría: ' . $e->getMessage());
+        }
     }
 
     // Elimina una categoría de la base de datos.
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        return redirect('/categorias')->with('success', 'Categoría eliminada con éxito.');
+        try {
+            $categoria->delete();
+            return redirect('/categorias')->with('success', 'Categoría eliminada con éxito.');
+        } catch (\Exception $e) {
+            return redirect('/categorias')->with('error', 'Hubo un error al eliminar la categoría: ' . $e->getMessage());
+        }
     }
 }
+

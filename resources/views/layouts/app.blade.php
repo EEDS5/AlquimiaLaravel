@@ -24,10 +24,9 @@
                   <li class="nav-item"><a class="nav-link" href="">Docentes</a></li>
                   <li class="nav-item"><a class="nav-link" href="">Galeria</a></li>
                   <li class="nav-item"><a class="nav-link" href="">Reserva</a></li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tipoPlatos.index') }}">Tipos de Plato</a>
-                </li>
-              </ul>
+                  <li class="nav-item"><a class="nav-link" href="{{ route('tipoPlatos.index') }}">Tipos de Plato</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ route('categorias.index') }}">Categorías</a></li>
+                </ul>
 
               @guest
               <a class="btn btn-secondary" role="button" href="{{route('register')}}" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</a>
