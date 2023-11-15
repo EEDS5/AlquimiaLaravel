@@ -74,7 +74,7 @@ class ClienteController extends Controller
             $usuario = new Usuario([
                 'id' => $persona->id, // Asegurarse de que el id de usuario es el mismo que el de persona
                 'username' => $request->username,
-                'contraseña' => bcrypt($request->contraseña), // Encriptar la contraseña
+                'contraseña' => bcrypt($request->password), // Encriptar la contraseña
                 'estado' => true,
             ]);
             $usuario->save();
