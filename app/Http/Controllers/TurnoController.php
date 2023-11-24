@@ -10,8 +10,11 @@ class TurnoController extends Controller
     // Muestra una lista de todos los turnos.
     public function index()
     {
-        $turnos = Turno::all();
-        return view('turnos.index', compact('turnos'));
+        // $turnos = Turno::all();
+        // return view('turnos.index', compact('turnos'));
+        // Asegúrate de que solo se retornen los turnos activos si es necesario
+        $turnos = Turno::where('estado', true)->get();
+        return response()->json($turnos);
     }
 
     // Muestra el formulario para crear un nuevo turno.

@@ -8,11 +8,21 @@
     @vite('resources/js/app.js')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Alquimia</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    
+  
   <header>
-    <nav class="navbar navbar-expand-md sticky-top py-3 navbar-dark" id="mainNav" style="background: var(--bs-emphasis-color);">
+    <div id="app">
+      <menu-barra ></menu-barra>
+      <router-view></router-view>
+    </div>
+    <style>
+      body {
+        background-color: var(--bs-emphasis-color);
+      }
+    </style>
+    {{-- <nav class="navbar navbar-expand-md sticky-top py-3 navbar-dark" id="mainNav" style="background: var(--bs-emphasis-color);">
       <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><a class="navbar-brand" href="#">
       <img src="../img/LogoAlquimia.svg" alt="" width="250" height="50" class="d-inline-block align-text-top img-fluid">
     </a></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -69,7 +79,7 @@
         </h2>
         @yield('contenido')
       </main>
-    
+     --}}
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>

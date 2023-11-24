@@ -12,8 +12,11 @@ class TipoPlatoController extends Controller
 
     public function index()
     {
-        $tipoPlatos = TipoPlato::all();
-        return view('tipoPlatos.index', compact('tipoPlatos'));
+        // $tipoPlatos = TipoPlato::all();
+        // return view('tipoPlatos.index', compact('tipoPlatos'));
+        // Asegúrate de que solo se retornen los tipos de platos activos si es necesario
+        $tipoPlatos = TipoPlato::where('estado', true)->get();
+        return response()->json($tipoPlatos);
     }
 
 

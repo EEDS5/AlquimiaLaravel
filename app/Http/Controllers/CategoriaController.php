@@ -10,8 +10,11 @@ class CategoriaController extends Controller
     // Muestra una lista de todas las categorías.
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('categorias.index', compact('categorias'));
+        // $categorias = Categoria::all();
+        // return view('categorias.index', compact('categorias'));
+        // Asegúrate de que solo se retornen las categorías activas si es necesario
+        $categorias = Categoria::where('estado', true)->get();
+        return response()->json($categorias);
     }
 
     // Muestra el formulario para crear una nueva categoría.

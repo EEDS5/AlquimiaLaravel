@@ -10,7 +10,6 @@
                 <th>Nombre</th>
                 <th>Imagen</th>
                 <th>Descripción</th>
-                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -20,7 +19,6 @@
                     <td>{{ $plato->nombre }}</td>
                     <td><img src="{{ Storage::url($plato->imagen) }}" width="100" /></td>
                     <td>{{ $plato->descripcion }}</td>
-                    <td>{{ $plato->estado ? 'Activo' : 'Inactivo' }}</td>
                     <td>
                         <a href="{{ route('platos.edit',  $plato->id) }}" class="btn btn-warning">Editar</a>
                         <form action="{{ route('platos.destroy',  $plato->id) }}" method="POST" style="display: inline-block;">

@@ -24,7 +24,7 @@ class PlatoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|max:50',
+            'nombre' => 'required|max:50|unique:platos',
             'descripcion' => 'nullable|max:100',
             'imagen' => 'nullable|image', // 1MB Max
         ]);
@@ -61,7 +61,7 @@ class PlatoController extends Controller
 {
     // Validar los datos del formulario
     $validatedData = $request->validate([
-        'nombre' => 'required|max:255',
+        'nombre' => 'required|max:255|unique',
         'descripcion' => 'required',
         'imagen' => 'image|mimes:jpeg,png,jpg,gif,svg', // Valida que el archivo sea una imagen
     ]);

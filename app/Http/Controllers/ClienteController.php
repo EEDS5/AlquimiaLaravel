@@ -38,10 +38,6 @@ class ClienteController extends Controller
             'telefono' => 'required|string|max:30|unique:personas',
             'direccion' => 'required|string|max:50',
             'email' => 'required|string|max:30|unique:personas|email',
-
-            
-
-
             // Reglas de validación para los campos de Cliente
             'razon_social' => 'required|string|max:50',
             'nit' => 'required|string|max:50',

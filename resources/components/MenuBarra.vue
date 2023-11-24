@@ -12,16 +12,17 @@
                        <li class="nav-item"><a class="nav-link" href="">Galeria</a></li>
                        <li class="nav-item"><a class="nav-link" href="">Reserva</a></li>
                    </ul>
-                   <a class="btn btn-secondary" role="button" href="/register" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</a>
-                   <a class="btn btn-secondary" role="button" href="/login" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Login</a>
+                   <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Inicio</router-link>
+                    <router-link to="/registrarse" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</router-link>
+
+              
+                    
+
                </div>
            </div>
        </nav>
      </template>
-   <style>
-   
-   
-   
+   <style scoped>
    #mainNav .btn {
      margin-left: 10px;
      background-color: #ffffff;
@@ -37,12 +38,22 @@
      display: flex; /* Coloca los enlaces en una disposición flexible */
      align-items: center; /* Alinea los enlaces verticalmente en el centro */
      text-align: center; /* Alinea los enlaces horizontalmente en el centro */
-   }
+   } 
+    
    
    </style>
    
    <script>
        export default {
            name: 'BarraMenu',
+           methods: {
+                goToRegister() {
+                  window.location.href = '/register';
+                },
+
+                goToLogin() {
+                  window.location.href = '/login';
+                },
+              },
        }
    </script>

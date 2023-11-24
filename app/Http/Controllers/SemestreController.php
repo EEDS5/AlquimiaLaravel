@@ -10,8 +10,11 @@ class SemestreController extends Controller
     // Muestra una lista de todos los semestres.
     public function index()
     {
-        $semestres = Semestre::all();
-        return view('semestres.index', compact('semestres'));
+        // $semestres = Semestre::all();
+        // return view('semestres.index', compact('semestres'));
+        // Asegúrate de que solo se retornen los semestres activos si es necesario
+        $semestres = Semestre::where('estado', true)->get();
+        return response()->json($semestres);
     }
 
     // Muestra el formulario para crear un nuevo semestre.
