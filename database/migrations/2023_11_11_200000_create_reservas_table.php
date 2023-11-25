@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->foreignId('persona_id')->constrained('personas');
+            $table->foreignId('gestion_menu_id')->nullable()->constrained('gestion_menus');
             $table->foreignId('entrada_id')->nullable()->constrained('entradas');
             $table->foreignId('pago_id')->nullable()->constrained('pagos');
             $table->date('fecha');

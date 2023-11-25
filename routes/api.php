@@ -52,3 +52,9 @@ Route::get('/bebidas', [BebidaController::class, 'index']);
 // Obtener todos los gestiones de menú
 Route::get('/gestion-menus', [GestionMenuController::class, 'index']);
 Route::post('/gestion-menus', [GestionMenuController::class, 'store']);
+
+// Obtener todos los gestiones de menú
+Route::get('/menus-activos', [GestionMenuController::class, 'getMenusActivos']);
+
+// Obtener todos las Reservas
+Route::post('/reserva', [ReservaController::class, 'store']);

@@ -215,8 +215,9 @@ CREATE TABLE Reserva (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Cliente_Id INT NOT NULL,
     Persona_Id INT NOT NULL,
-    Entrada_Id INT, --Opcional, porque un cliente puede realizar la reserva a distancia y por lo tanto no tendra en ese momento la entrada.
-    Pago_Id INT, --Opcional, un cliente puede no pagar en ese mismo momento al realizar la reserva. 
+    Entrada_Id INT, -- Opcional, porque un cliente puede realizar la reserva a distancia y por lo tanto no tendrá en ese momento la entrada.
+    Pago_Id INT, -- Opcional, un cliente puede no pagar en ese mismo momento al realizar la reserva.
+    Gestion_Menu_Id INT, -- Nueva columna para la relación con Gestión Menú.
     Fecha DATE NOT NULL,
     monto DECIMAL(7,2),
     Cantidad_cupo INT,
@@ -225,5 +226,6 @@ CREATE TABLE Reserva (
     FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id),
     FOREIGN KEY (Persona_Id) REFERENCES Persona(Id),
     FOREIGN KEY (Entrada_Id) REFERENCES Entrada(Id),
-    FOREIGN KEY (Pago_Id) REFERENCES Pago(Id)
+    FOREIGN KEY (Pago_Id) REFERENCES Pago(Id),
+    FOREIGN KEY (Gestion_Menu_Id) REFERENCES GestionMenu(Id) -- Nueva clave foránea.
 );

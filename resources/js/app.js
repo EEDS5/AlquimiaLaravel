@@ -29,6 +29,7 @@ app.component('dashboard-cliente', Dashboard);
 // app.component('validation-message', ValidationMessage);
 app.component('video-alquimia', VideoAlquimia);
 app.component('registro-gestion-menu', RegistroGestionMenu);
+
 app.use(router);
 
 app.mount('#app');

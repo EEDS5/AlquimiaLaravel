@@ -30,4 +30,9 @@ class Reserva extends Model
     {
         return $this->belongsTo(Pago::class);
     }
+
+    public function gestionMenu()
+    {
+        return $this->belongsTo(GestionMenu::class);
+    }
 }
