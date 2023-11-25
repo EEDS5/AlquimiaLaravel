@@ -10,6 +10,7 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [ClienteController::class, 'store']);
+
+
+Route::post('/login', [LoginController::class, 'store']);
 // Obtener todas las categorías
 Route::get('/categorias', [CategoriaController::class, 'index']);
 

@@ -14,6 +14,7 @@
                    </ul>
                    <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Inicio</router-link>
                     <router-link to="/registrarse" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</router-link>
+                    <router-link to="/login" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Iniciar sesión</router-link>
 
               
                     

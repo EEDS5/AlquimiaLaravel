@@ -2,6 +2,8 @@ import './bootstrap';
 import { createApp } from 'vue'
 import  MenuBarra  from '../components/MenuBarra.vue'
 import  RegistroCliente from '../components/RegistroCliente.vue'
+import LoginCliente from '../components/LoginCliente.vue';
+import Dashboard from '../components/Dashboard.vue';
 import router from './router';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 const app = createApp({});
 app.component('menu-barra', MenuBarra);
 app.component('registro-cliente', RegistroCliente);
+app.component('login-cliente', LoginCliente);
+app.component('dashboard-cliente', Dashboard);
 // app.component('validation-message', ValidationMessage);
 app.component('video-alquimia', VideoAlquimia);
 app.component('registro-gestion-menu', RegistroGestionMenu);

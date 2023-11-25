@@ -1,0 +1,92 @@
+<template>
+    <div class="container mt-5">
+        <form @submit.prevent="submitForm">
+            <!-- Mensaje de éxito -->
+            <div v-if="successMessage" class="alert alert-success">
+                {{ successMessage }}
+            </div>
+
+            <!-- Mensajes de error -->
+            <div v-if="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <input type="text" v-model="form.username" placeholder="Username" class="form-control" :class="{ 'is-invalid': errors.username }">
+                <div v-if="errors.username" class="invalid-feedback">
+                    {{ errors.username[0] }}
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <input type="password" v-model="form.contraseña" placeholder="Password" class="form-control" :class="{ 'is-invalid': errors.password }">
+                <div v-if="errors.contraseña" class="invalid-feedback">
+                    {{ errors.contraseña[0] }}
+                </div>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            form: {
+                username: '',
+                contraseña: '',
+            },
+            errors: {},
+            successMessage: '',
+            errorMessage: '',
+        };
+    },
+    methods: {
+        submitForm() {
+        // Reiniciar mensajes
+        this.successMessage = '';
+        this.errorMessage = '';
+        this.errors = {};  // Agrega esta línea para reiniciar los errores de validación
+
+        axios.post('/api/login', this.form)
+            .then(response => {
+                console.log(response);
+                this.successMessage = 'Inicio de sesión exitoso. Redirigiendo...';
+                // Redirige a la ruta proporcionada o la raíz por defecto
+                this.$router.push('/dashboard');
+            })
+            .catch(error => {
+                console.error('Error en el inicio de sesión', error);
+                if (error.response && error.response.status === 422) {
+                    // Maneja errores de validación
+                    this.errors = error.response.data.errors;
+                    this.errorMessage = 'Credenciales no válidas';
+                } else if (error.response && error.response.status === 401) {
+                    // Maneja errores de autenticación
+                    this.errorMessage = error.response.data.message || 'Error en el inicio de sesión';
+                } else {
+                    // Maneja otros tipos de errores
+                    this.errorMessage = 'Error en el inicio de sesión';
+                }
+            });
+    }
+    }
+}
+</script>
+
+<style scoped>
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    display: block;
+}
+</style>
+

@@ -26,13 +26,22 @@ class LoginController extends Controller
 
         $user = User::where('username', $request->username)->first();
 
-        if (!$user || !Hash::check($request->contraseña, $user->contraseña)) {
-            return back()->with('mensaje', 'Credenciales no válidas');
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 422);
+        }
+
+        if (!Hash::check($request->contraseña, $user->contraseña)) {
+            return response()->json(['message' => 'Credenciales no válidas'], 422);
         }
 
         auth('web')->login($user, $request->remember);
 
-        return redirect()->route('reserva.index');
+        // Asignar manualmente una sesión
+        session(['user' => $user]);
+
+        return response()->json([
+            'message' => 'Inicio de sesión exitoso',
+        ]);
     }
 }
 
