@@ -8,7 +8,7 @@
       <input type="text" v-model="form.ci" placeholder="CI" required>
       <input type="email" v-model="form.email" placeholder="Email" required>
       <input type="tel" v-model="form.telefono" placeholder="Teléfono" required>
-      
+
       <!-- Selección de GestionMenu Activo -->
       <select v-model="form.gestion_menu_id" required>
         <option disabled value="">Seleccione un Gestión Menú</option>
@@ -42,10 +42,10 @@ export default {
         telefono: '',
         gestion_menu_id: '',
         fecha: '',
-        cantidad_cupo: 1, // Valor inicial positivo
+        cantidad_cupo: 1,
       },
-      minDate: new Date().toISOString().split('T')[0], // Fecha actual como mínimo
-      menusActivos: [], // Lista de Menus Activos
+      minDate: new Date().toISOString().split('T')[0],
+      menusActivos: [],
       errors: {}
     };
   },
@@ -54,46 +54,39 @@ export default {
   },
   methods: {
     cargarMenusActivos() {
-      // Lógica para cargar los menus activos desde el backend
       axios.get('/api/menus-activos')
-      .then(response => {
-        this.menusActivos = response.data;
-      })
-
-      .then(response => {
-  console.log("Datos recibidos:", response.data);
-  this.menusActivos = response.data;
-})
-
-      .catch(error => {
-        console.error('Error al cargar los menús activos:', error);
-      });
+        .then(response => {
+          this.menusActivos = response.data;
+        })
+        .catch(error => {
+          console.error('Error al cargar los menús activos:', error);
+        });
+    },
+    confirmarSeleccionMenu() {
+      console.log("Menú seleccionado:", this.form.gestion_menu_id);
     },
     submitForm() {
-      const datosReserva = {
-        // Aquí se mapean los datos del formulario a los datos esperados por la API
+      console.log("Formulario a enviar:", this.form); // Depuración
+      const datosClienteYReserva = {
         persona: {
-        nombre: this.form.nombre,
-        apellido_p: this.form.apellido_p,
-        apellido_m: this.form.apellido_m,
-        ci: this.form.ci,
-        email: this.form.email,
-        telefono: this.form.telefono
-      },
-      reserva: {
-        gestion_menu_id: this.form.gestion_menu_id,
-        fecha: this.form.fecha,
-        cantidad_cupo: this.form.cantidad_cupo,
-        // Puedes definir valores predeterminados para 'estado' y 'monto' aquí si es necesario
-      }
+          nombre: this.form.nombre,
+          apellido_p: this.form.apellido_p,
+          apellido_m: this.form.apellido_m,
+          ci: this.form.ci,
+          email: this.form.email,
+          telefono: this.form.telefono
+        },
+        reserva: {
+          gestion_menu_id: this.form.gestion_menu_id,
+          fecha: this.form.fecha,
+          cantidad_cupo: this.form.cantidad_cupo
+        }
       };
 
-      axios.post('/api/reservas', datosReserva)
+      axios.post('/api/reserva', datosClienteYReserva)
         .then(response => {
-          // Manejar el éxito
-          alert('Reserva registrada exitosamente.');
-          // Reiniciar el formulario
-          this.form = {};
+          alert('Cliente y reserva registrados exitosamente.');
+          this.form = {}; // Reiniciar el formulario
         })
         .catch(error => {
           if (error.response && error.response.status === 422) {

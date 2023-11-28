@@ -9,7 +9,7 @@ class Reserva extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cliente_id', 'persona_id', 'entrada_id', 'pago_id', 'fecha', 'monto', 'cantidad_cupo', 'estado'];
+    protected $fillable = ['cliente_id', 'persona_id', 'gestion_menu_id', 'entrada_id', 'pago_id', 'fecha', 'monto', 'cantidad_cupo', 'estado'];
 
     public function cliente()
     {

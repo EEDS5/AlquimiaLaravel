@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('razon_social', 50)->nullable();
             $table->string('nit', 50)->nullable();
             $table->timestamps();
-            
         });              
     }
 

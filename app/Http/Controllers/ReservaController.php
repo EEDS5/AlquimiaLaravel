@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Persona;
 use App\Models\Entrada;
 use App\Models\Pago;
+use App\Models\GestionMenu;
 use Illuminate\Http\Request;
 
 class ReservaController extends Controller
@@ -28,7 +29,7 @@ class ReservaController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     // Validar los datos de la persona
     $datosPersona = $request->validate([
         'persona.nombre' => 'required|string|max:60',
@@ -41,34 +42,45 @@ class ReservaController extends Controller
 
     // Crear la persona
     $persona = Persona::create([
+        'tipo_persona_id' => 1, // Valor predeterminado porque cada usuario que realiza una reserva se convierte en Cliente
         'nombre' => $datosPersona['persona']['nombre'],
         'apellido_p' => $datosPersona['persona']['apellido_p'],
         'apellido_m' => $datosPersona['persona']['apellido_m'],
         'ci' => $datosPersona['persona']['ci'],
         'email' => $datosPersona['persona']['email'],
         'telefono' => $datosPersona['persona']['telefono'],
+        'estado' => true,
     ]);
+
+    // Crear el cliente a partir de la persona
+    $cliente = new Cliente;
+    $cliente->id = $persona->id; // El id de la persona es el mismo que el del cliente
+    $cliente->save();
 
     // Validar los datos de la reserva
     $datosReserva = $request->validate([
         'reserva.gestion_menu_id' => 'required|exists:gestion_menus,id',
         'reserva.fecha' => 'required|date|after_or_equal:today',
         'reserva.cantidad_cupo' => 'required|integer|min:1',
+        // Añadir validaciones para otros campos si es necesario
     ]);
 
     // Crear la reserva
     $reserva = new Reserva([
+        'cliente_id' => $cliente->id,
+        'persona_id' => $persona->id,
         'gestion_menu_id' => $datosReserva['reserva']['gestion_menu_id'],
         'fecha' => $datosReserva['reserva']['fecha'],
         'cantidad_cupo' => $datosReserva['reserva']['cantidad_cupo'],
-        'estado' => 'A', // Estado predeterminado, por ejemplo, 'Activo'
+        'estado' => 'P', // Estado predeterminado en "Pendiente"
+        // Agrega cualquier otro campo necesario
     ]);
-    $reserva->persona_id = $persona->id;
-    // Asignar 'cliente_id' si es necesario
     $reserva->save();
 
+    \Log::info('Request data:', $request->all());
+
     return response()->json(['message' => 'Reserva creada con éxito', 'reserva' => $reserva], 201);
-}
+    }
 
     public function show(Reserva $reserva)
     {
@@ -95,19 +107,12 @@ class ReservaController extends Controller
         ]);
 
         $reserva->update($validatedData);
-        return redirect('/reservas')->with('success', 'Reserva actualizada con éxito.');
+        return redirect('/reserva')->with('success', 'Reserva actualizada con éxito.');
     }
 
     public function destroy(Reserva $reserva)
     {
         $reserva->delete();
-        return redirect('/reservas')->with('success', 'Reserva eliminada con éxito.');
+        return redirect('/reserva')->with('success', 'Reserva eliminada con éxito.');
     }
-
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
-
-   
 }

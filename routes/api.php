@@ -11,6 +11,7 @@ use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReservaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,5 +57,5 @@ Route::post('/gestion-menus', [GestionMenuController::class, 'store']);
 // Obtener todos los gestiones de menú
 Route::get('/menus-activos', [GestionMenuController::class, 'getMenusActivos']);
 
-// Obtener todos las Reservas
 Route::post('/reserva', [ReservaController::class, 'store']);
+

@@ -45,8 +45,8 @@ CREATE TABLE Empleado (
 -- Tabla Cliente:
 CREATE TABLE Cliente (
     Id INT NOT NULL PRIMARY KEY,
-    RazonSocial VARCHAR(50) NOT NULL,
-    NIT VARCHAR(50) NOT NULL,
+    RazonSocial VARCHAR(50),
+    NIT VARCHAR(50),
 
     FOREIGN KEY (Id) REFERENCES Persona(Id)
 );
