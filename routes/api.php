@@ -10,8 +10,11 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
+<<<<<<< HEAD
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReservaController;
+=======
+>>>>>>> b57ee2867047b228473d1460b36bfc98ecb747bb
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +52,8 @@ Route::get('/menu-ofertados', [MenuOfertadoController::class, 'index']);
 
 // Obtener todas las bebidas
 Route::get('/bebidas', [BebidaController::class, 'index']);
+
+Route::get('/platos', [PlatoController::class, 'index']);
 
 // Obtener todos los gestiones de menú
 Route::get('/gestion-menus', [GestionMenuController::class, 'index']);

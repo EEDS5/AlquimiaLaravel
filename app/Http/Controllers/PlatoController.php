@@ -11,7 +11,7 @@ class PlatoController extends Controller
     public function index()
     {
         $platos = Plato::where('estado', 1)->get();
-        return view('platos.index', compact('platos'));
+        return response()->json($platos);
     }
 
     // Muestra el formulario para crear un nuevo plato

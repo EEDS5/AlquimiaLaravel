@@ -1,118 +1,225 @@
 <template>
-    <div>
-      <form @submit.prevent="submitForm">
-        <!-- Select para Categoría -->
-        <select v-model="form.categoria_id" required>
-          <option disabled value="">Seleccione una categoría</option>
-          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
-            {{ categoria.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para Categoría -->
-        <div v-if="errors.categoria_id">{{ errors.categoria_id }}</div>
-        
-        <!-- Select para Semestre -->
-        <select v-model="form.semestre_id" required>
-          <option disabled value="">Seleccione un semestre</option>
-          <option v-for="semestre in semestres" :key="semestre.id" :value="semestre.id">
-            {{ semestre.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para Semestre -->
-        <div v-if="errors.semestre_id">{{ errors.semestre_id }}</div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h2 class="text-center mb-4 form-header">Programar Gestión Menú</h2>
+          <form @submit.prevent="submitForm" class="form-styling border p-4 rounded">
+            <!-- Semestre -->
+            <div class="mb-3">
+              <label for="semestre" class="form-label">Semestre:</label>
+              <select id="semestre" class="form-select " :class="{ 'is-invalid': errors.semestre_id }"  v-model="form.semestre_id" 
+              @change="validateDateRange" required>
+                <option disabled value="">Elige una de las opciones</option>
+                <!-- Opciones del semestre -->
+                <option v-for="semestre in semestres" :key="semestre.id" :value="semestre.id">
+                  {{ semestre.nombre }}
+                </option>
+              </select>
+              <div v-if="errors.semestre_id" class="invalid-feedback">
+                {{ errors.semestre_id[0] }}
+              </div>
+            </div>
+            
+            <!-- Fecha -->
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Fecha:</label>
+              <input type="date" id="fecha" class="form-control" :class="{ 'is-invalid': errors.fecha }" v-model="form.fecha" required>
+              <div v-if="errors.fecha" class="invalid-feedback">
+                {{ errors.fecha }}
+              </div>
+            </div>
+            
+            <!-- Turno -->
+            <div class="mb-3">
+              <label for="turno" class="form-label">Turno:</label>
+              <select id="turno" class="form-select" v-model="form.turno_id" required>
+                <option disabled value="">Elige una opción</option>
+                <!-- Opciones de turno -->
+                <option v-for="turno in turnos" :key="turno.id" :value="turno.id">
+                  {{ turno.descripcion }}
+                </option>
+              </select>
+            </div>
 
-        <!-- Select para Tipo Plato -->
-        <select v-model="form.tipo_plato_id" required>
-          <option disabled value="">Seleccione un tipo de plato</option>
-          <option v-for="tipoPlato in tipoPlatos" :key="tipoPlato.id" :value="tipoPlato.id">
-            {{ tipoPlato.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para Tipo Plato -->
-        <div v-if="errors.tipo_plato_id">{{ errors.tipo_plato_id }}</div>
+            <!-- Tipo Plato -->
+            <div class="mb-3">
+              <label for="tipoPlato" class="form-label">Tipo Plato:</label>
+              <select id="tipoPlato" class="form-select" v-model="form.tipo_plato_id" required>
+                <option disabled value="">Elige una de las opciones</option>
+                <!-- Opciones de tipo plato -->
+                <option v-for="tipoPlato in tipoPlatos" :key="tipoPlato.id" :value="tipoPlato.id">
+                  {{ tipoPlato.descripcion }}
+                </option>
+              </select>
+            </div>
 
-        <!-- Select para Turno -->
-        <select v-model="form.turno_id" required>
-          <option disabled value="">Seleccione un turno</option>
-          <option v-for="turno in turnos" :key="turno.id" :value="turno.id">
-            {{ turno.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para Turno -->
-        <div v-if="errors.turno_id">{{ errors.turno_id }}</div>
+            <!-- Categoría -->
+            <div class="mb-3">
+              <label for="categoria" class="form-label">Categoría:</label>
+              <select id="categoria" class="form-select" v-model="form.categoria_id" @change="handleCategoriaChange" required>
+                <option disabled value="">Elige una de las opciones</option>
+                <option value="1">Menú cerrado</option>
+                <option value="2">Buffet</option>
+              </select>
+            </div>
 
-        <!-- Select para Menú Ofertado -->
-        <select v-model="form.menu_ofertado_id" required>
-          <option disabled value="">Seleccione un menú ofertado</option>
-          <option v-for="menuOfertado in menusOfertados" :key="menuOfertado.id" :value="menuOfertado.id">
-            {{ menuOfertado.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para Menú Ofertado -->
-        <div v-if="errors.menu_ofertado_id">{{ errors.menu_ofertado_id }}</div>
+            <!-- Secciones condicionales de platos para Menú cerrado -->
+            <template v-if="form.categoria_id == '1'">
+              <!-- Sección de Entrantes -->
+              <div class="mb-3">
+                <label>Entrantes:</label>
+                <div v-for="(selectedEntrante, index) in form.entrantes" :key="index">
+                  <select v-model="selectedEntrante.id" class="form-select">
+                    <option disabled value="">Selecciona un entrante</option>
+                    <option v-for="plato in platos" :key="plato.id" :value="plato.id">
+                      {{ plato.nombre }}
+                    </option>
+                  </select>
+                  <button @click.prevent="eliminarPlato('entrantes', index)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+                <button @click.prevent="agregarPlato('entrantes')">Agregar entrante</button>
+              </div>
 
-        <!-- Select para bebida -->
-        <select v-model="form.bebida_id" required>
-          <option disabled value="">Seleccione una bebida</option>
-          <option v-for="bebida in bebidas" :key="bebida.id" :value="bebida.id">
-            {{ bebida.descripcion }}
-          </option>
-        </select>
-        <!-- Mensaje de validación para bebida -->
-        <div v-if="errors.bebida_id">{{ errors.bebida_id }}</div>
+              <!-- Sección de Platos Principales -->
+              <div class="mb-3">
+                <label>Principal:</label>
+                <div v-for="(selectedPrincipal, index) in form.principales" :key="index">
+                  <select v-model="selectedPrincipal.id" class="form-select">
+                    <option disabled value="">Selecciona un plato principal</option>
+                    <option v-for="plato in platos" :key="plato.id" :value="plato.id">
+                      {{ plato.nombre }}
+                    </option>
+                  </select>
+                  <button @click.prevent="eliminarPlato('principales', index)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+                <button @click.prevent="agregarPlato('principales')">Agregar principal</button>
+              </div>
 
+              <!-- Sección de Postres -->
+              <div class="mb-3">
+                <label>Postre:</label>
+                <div v-for="(selectedPostre, index) in form.postres" :key="index">
+                  <select v-model="selectedPostre.id" class="form-select">
+                    <option disabled value="">Selecciona un postre</option>
+                    <option v-for="plato in platos" :key="plato.id" :value="plato.id">
+                      {{ plato.nombre }}
+                    </option>
+                  </select>
+                  <button @click.prevent="eliminarPlato('postres', index)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+                <button @click.prevent="agregarPlato('postres')">Agregar postre</button>
+              </div>
+            </template>
 
-       
-        <!-- Campo para descripción -->
-        <input type="text" v-model="form.descripcion" placeholder="Descripción" required>
-        <!-- Mensaje de validación para Descripción -->
-        <div v-if="errors.descripcion">{{ errors.descripcion }}</div>
+        <!-- Sección condicional para Buffet -->
+        <template v-if="form.categoria_id == '2'">
+          <div class="mb-3">
+            <label>Barra libre:</label>
+            <div v-for="(selectBarraLibre, index) in form.BarraLibre" :key="index">
+              <select v-model="selectBarraLibre.id" class="form-select">
+              <option disabled value="">Selecione un plato</option>
+                <option v-for="plato in platos" :key="plato.id" :value="plato.id">
+                  {{ plato.nombre }}
+                </option>
+              </select>
+              <button @click.prevent="eliminarPlato('barras', index)" class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+              <button @click.prevent="agregarPlato('barras')">Agregar plato</button>
+          </div>
+        </template>
 
-      <!-- Campo para la Imagen -->
-      <input type="file"  @change="handleFileUpload" required>
-      <!-- Mensaje de validación para Imagen -->
-      <div v-if="errors.imagen">{{ errors.imagen[0] }}</div>
+            <!-- Precio y Cupos -->
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio:</label>
+              <input type="number" id="precio" class="form-control" v-model="form.precio" required>
 
-      <!-- Campo para Costo -->
-      <input type="number" v-model="form.costo" placeholder="Costo" min="0" step="0.01" required>
-      <!-- Mensaje de validación para Costo -->
-      <div v-if="errors.costo">{{ errors.costo[0] }}</div>
+              <label for="cupos" class="form-label">Cupos:</label>
+              <input type="number" id="cupos" class="form-control" v-model="form.cupos" required>
+            </div>
 
-      <!-- Campo para Total Cupo -->
-      <input type="number" v-model="form.total_cupo" placeholder="Total de cupos" min="0" required>
-      <!-- Mensaje de validación para Total Cupo -->
-      <div v-if="errors.total_cupo">{{ errors.total_cupo[0] }}</div>
+            <!-- Imagen -->
+            <div class="mb-3">
+              <label for="imagen" class="form-label">Imagen:</label>
+              <input type="file" id="imagen" @change="handleFileUpload" class="form-control" required>
+            </div>
 
-      <!-- Campo para Cupo Disponible -->
-      <input type="number" v-model="form.cupo_disponible" placeholder="Cupos disponibles" min="0" required>
-      <!-- Mensaje de validación para Cupo Disponible -->
-      <div v-if="errors.cupo_disponible">{{ errors.cupo_disponible[0] }}</div>
+            <!-- Descripción -->
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción:</label>
+              <textarea id="descripcion" class="form-control" v-model="form.descripcion" required></textarea>
+            </div>
 
-      <!-- Campo para Fecha -->
-      <input type="datetime-local" v-model="form.fecha" placeholder="Fecha y hora" required>
-      <!-- Mensaje de validación para Fecha -->
-      <div v-if="errors.fecha">{{ errors.fecha[0] }}</div>
-
-      <!-- Select para Estado -->
-      <select v-model="form.estado" required>
-        <option disabled value="">Seleccione el estado</option>
-        <option value="A">Activo</option>
-        <option value="I">Inactivo</option>
-      </select>
-      <!-- Mensaje de validación para Estado -->
-      <div v-if="errors.estado">{{ errors.estado[0] }}</div>
-  
-        <button type="submit">Crear Menú</button>
-      </form>
+            <!-- Botón de envío -->
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+     </div>
     </div>
-  </template>
+  </div>
+</template>
+
+<style scoped>
+  .form-container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* Estilos adicionales para campos y botones */
+  .form-control, .form-select {
+    margin-bottom: 15px;
+  }
+
+  /* Botón centrado y estilizado */
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .form-header {
+  color: white;
+}
+
+.form-styling {
+  background-color: #343a40; /* Bootstrap dark background */
+  color: white;
+}
+
+.form-styling .form-control, .form-styling .form-select {
+  margin-bottom: 15px;
+}
+
+.form-styling .btn-primary {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.form-styling  {
+  color: #faf9f9; 
+}
+
+.invalid-feedback {
+  display: block; 
+  width: 100%; 
+  overflow: visible; 
+  /**display: block*/;
+}
+
+
+
+/* Si necesitas estilos adicionales, aquí puedes añadirlos */
+</style>
+
   
-  <script>
+<script>
+  import axios from 'axios';
+  
   export default {
     data() {
       return {
+        
         form: {
-          // Inicializa todas las propiedades del modelo aquí...
+          
           categoria_id: '',
           semestre_id: '',
           tipo_plato_id: '',
@@ -120,19 +227,32 @@
           menu_ofertado_id: '',
           descripcion: '',
           imagen: '',
-            costo: '',
-            total_cupo: '',
-            cupo_disponible: '',
-            fecha: '',
-            estado: 'A',
+          costo: '',
+          total_cupo: '',
+          cupo_disponible: '',
+          fecha: '',
+          estado: 'A',
+          entrantes: [{ id: null }],
+          principales: [{ id: null }],
+          postres: [{ id: null }],
+          BarraLibre: [{ nombre: '' }],
         },
+        semestreData: {
+          fecha_inicio: null,
+          fecha_final: null,
+        },
+        categorias: [
+          { id: 1, descripcion: 'Menu cerrado' },
+          { id: 2, descripcion: 'Buffet' },
+        ],
+
         file: null, // Este es para mantener el archivo binario de la imagen
         categorias: [], // Datos dinámicos cargados del backend
         semestres: [],  // Datos dinámicos cargados del backend
         tipoPlatos: [], // Datos dinámicos cargados del backend
         turnos: [],     // Datos dinámicos cargados del backend
-        menusOfertados: [], // Datos dinámicos cargados del backend
-        errors: {}
+        platos: [],     // Datos dinámicos cargados del backend
+        errors: {fecha: null,}
       };
     },
     mounted() {
@@ -141,7 +261,8 @@
       this.loadSemestres();
         this.loadTipoPlatos();
         this.loadTurnos();
-        this.loadMenusOfertados();
+        this.loadPlatos();
+
       
     },
     methods: {
@@ -156,64 +277,150 @@
         console.error('Error loading categories:', error);
       });
     },
-    loadSemestres() {
-      axios.get('/api/semestres').then(response => {
-        this.semestres = response.data;
+
+    loadPlatos() {
+      axios.get('/api/platos').then(response => {
+        this.platos = response.data;
       }).catch(error => {
-        console.error('Error loading semesters:', error);
+        console.error('Error loading plates:', error);
       });
     },
-    loadTipoPlatos() {
-      axios.get('/api/tipo-platos').then(response => {
-        this.tipoPlatos = response.data;
-      }).catch(error => {
-        console.error('Error loading plate types:', error);
-      });
+      loadSemestres() {
+        axios.get('/api/semestres').then(response => {
+          this.semestres = response.data;
+        }).catch(error => {
+          console.error('Error loading semesters:', error);
+        });
+      },
+      loadTipoPlatos() {
+        axios.get('/api/tipo-platos').then(response => {
+          this.tipoPlatos = response.data;
+        }).catch(error => {
+          console.error('Error loading plate types:', error);
+        });
+      },
+      loadTurnos() {
+        axios.get('/api/turnos').then(response => {
+          this.turnos = response.data;
+        }).catch(error => {
+          console.error('Error loading shifts:', error);
+        });
     },
-    loadTurnos() {
-      axios.get('/api/turnos').then(response => {
-        this.turnos = response.data;
-      }).catch(error => {
-        console.error('Error loading shifts:', error);
-      });
-    },
-    loadMenusOfertados() {
-      axios.get('/api/menu-ofertados').then(response => {
-        this.menusOfertados = response.data;
-      }).catch(error => {
-        console.error('Error loading offered menus:', error);
-      });
-    },
+      validateDateRange() {
+        // Aquí validas que la fecha esté en el rango permitido por el semestre seleccionado
+        const selectedSemestre = this.semestres.find(semestre => semestre.id === this.form.semestre_id);
+        if (selectedSemestre) {
+          this.semestreData.fecha_inicio = selectedSemestre.fecha_inicio;
+          this.semestreData.fecha_final = selectedSemestre.fecha_final;
+        }
+      },
+
+      agregarPlato(tipo) {
+          if (tipo === 'entrantes') {
+          this.form.entrantes.push({ id: null });
+        } else if (tipo === 'principales') {
+          this.form.principales.push({ id: null });
+        } else if (tipo === 'postres') {
+          this.form.postres.push({ id: null });
+        } else if (tipo === 'barras') {
+          this.form.BarraLibre.push({ id: null });
+        }
+        if (ultimoPlato && ultimoPlato.id) {
+        // Si ya hay un plato seleccionado, añadir un nuevo campo
+        this.form[tipo].push({ id: null });
+        } else if (!ultimoPlato || !ultimoPlato.id) {
+        // Si el último plato está vacío, mostrar una alerta
+        alert('Por favor, selecciona un plato antes de añadir otro.');
+        }
+      },
+
+      eliminarPlato(tipo, index) {
+            
+        if (tipo === 'entrantes') {
+          this.form.entrantes.splice(index, 1);
+        } else if (tipo === 'principales') {
+          this.form.principales.splice(index, 1);
+        } else if (tipo === 'postres') {
+          this.form.postres.splice(index, 1);
+        } else if (tipo === 'barras') {
+          // Asegúrate de que 'BarraLibre' aquí coincida exactamente con cómo está definido en tu modelo de datos
+          this.form.BarraLibre.splice(index, 1);
+        }
+      },
+
+
+
+  
     submitForm() {
-        let formData = new FormData();
+        const formData = new FormData();
 
-      // Agrega el archivo al objeto formData si existe un archivo
-      if (this.file) {
-        formData.append('imagen', this.file, this.file.name);
-      }
+        // Agregar archivo de imagen si está presente
+        if (this.file) {
+          formData.append('imagen', this.file);
+        }
 
-      // Agrega otros campos del formulario al objeto formData
-      for (let key in this.form) {
-        if (key !== 'imagen') { // No agregar el campo imagen que es solo el nombre del archivo
+        // Agregar otros campos al objeto FormData
+        for (const key in this.form) {
+          if (['imagen', 'entrantes', 'principales', 'postres', 'BarraLibre'].includes(key)) continue;
           formData.append(key, this.form[key]);
         }
+
+        // Agregar los IDs de los platos seleccionados como menús ofertados
+        const agregarPlatos = (platos, tipoMenuId) => {
+          platos.forEach(plato => {
+            if (plato.id) { // Asegúrate de que hay un plato seleccionado
+              formData.append('menus_ofertados[]', plato.id);
+              formData.append('tipos_menu[]', tipoMenuId);
+            }
+          });
+        };
+
+        agregarPlatos(this.form.entrantes, 1); // ID para Entrantes
+        agregarPlatos(this.form.principales, 2); // ID para Principales
+        agregarPlatos(this.form.postres, 3); // ID para Postres
+        agregarPlatos(this.form.BarraLibre, 4); // ID para Barra Libre
+
+
+        // Agregar campos que no están en el modelo de formulario, como cupo_disponible y estado
+        formData.append('cupo_disponible', this.form.cupos);
+        formData.append('estado', 'A');
+
+        // Enviar FormData en lugar de this.form
+        axios.post('/api/gestion-menus', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          // Manejar respuesta exitosa
+          // Resetear el formulario si es necesario
+          // Mostrar mensaje de éxito
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) {
+            // Manejar errores de validación
+            this.errors = error.response.data.errors;
+          } else {
+            // Manejar otros errores
+          }
+        });
+      },
+    },
+    watch: {
+      'form.fecha'(newDate) {
+      if (newDate < this.semestreData.fecha_inicio || newDate > this.semestreData.fecha_final) {
+        
+        const fechaInicioFormatted = new Date(this.semestreData.fecha_inicio).toLocaleDateString();
+        const fechaFinalFormatted = new Date(this.semestreData.fecha_final).toLocaleDateString();
+        
+        this.errors.fecha = `Elige una fecha entre ${fechaInicioFormatted} y ${fechaFinalFormatted}`;
+        console.log(this.errors.fecha);
+      } else {
+        // Limpiar el error si la fecha está en el rango válido
+        this.errors.fecha = '';
       }
-      axios.post('/api/gestion-menus', this.form).then(response => {
-        // Handle your success
-        alert('Menu gestionado exitosamente.');
-        // Reset the form
-        this.form = {};
-      }).catch(error => {
-        if (error.response && error.response.status === 422) {
-          // Handle validation errors
-          this.errors = error.response.data.errors;
-        } else {
-          // Handle other kinds of errors
-          console.error('Error submitting form:', error);
-        }
-      });
-    }
-    }
-  };
-  </script>
+   }
+  }
+};
+</script>
   

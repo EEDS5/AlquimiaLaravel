@@ -86,7 +86,6 @@
         <!-- Razon Social -->
         <div class="form-group">
             <input type="text" v-model="form.razon_social" placeholder="Razon Social" class="form-control" :class="{ 'is-invalid': errors.razon_social }">
-            <!-- Asumiendo que quieres mostrar el mensaje de error debajo de cada campo -->
             <div v-if="errors.razon_social" class="invalid-feedback">
                 {{ errors.razon_social[0] }}
             </div>
@@ -94,7 +93,7 @@
         <!-- Nit -->
         <div class="form-group">
             <input type="text" v-model="form.nit" placeholder="Nit" class="form-control" :class="{ 'is-invalid': errors.nit }">
-            <!-- Asumiendo que quieres mostrar el mensaje de error debajo de cada campo -->
+            
             <div v-if="errors.nit" class="invalid-feedback">
                 {{ errors.nit[0] }}
             </div>
@@ -107,6 +106,7 @@
   </template>
   
   <script>
+
   import axios from 'axios';
   import ValidationMessages from '../components/ValidationMessages.vue';
   
