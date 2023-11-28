@@ -86,7 +86,7 @@ Route::get('/empleado/{id}/edit', [Empleado::class, 'edit'])->name('empleado.edi
 Route::put('/empleado/{id}', [Empleado::class, 'update'])->name('empleado.update');
 Route::delete('/empleado/{id}', [Empleado::class, 'destroy'])->name('empleado.destroy');
 
-Route::get('/plato', [PlatoController::class, 'index'])->name('platos.index');
+Route::get('/plato', [PlatoController::class, 'index']);
 Route::get('/plato/create', [PlatoController::class, 'create'])->name('platos.create');
 Route::post('/plato', [PlatoController::class, 'store'])->name('platos.store');
 Route::get('/plato/{plato}', [PlatoController::class, 'show'])->name('platos.show');

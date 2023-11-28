@@ -10,6 +10,7 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
+use App\Http\Controllers\PlatoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::get('/menu-ofertados', [MenuOfertadoController::class, 'index']);
 
 // Obtener todas las bebidas
 Route::get('/bebidas', [BebidaController::class, 'index']);
+
+Route::get('/platos', [PlatoController::class, 'index']);
 
 // Obtener todos los gestiones de menú
 Route::get('/gestion-menus', [GestionMenuController::class, 'index']);

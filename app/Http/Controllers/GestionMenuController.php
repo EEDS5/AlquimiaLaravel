@@ -8,7 +8,9 @@ use App\Models\Semestre;
 use App\Models\TipoPlato;
 use App\Models\Turno;
 use App\Models\MenuOfertado;
+use App\Models\GestionMenuDetalle;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class GestionMenuController extends Controller
@@ -32,10 +34,9 @@ class GestionMenuController extends Controller
             'descripcion' => 'required|string|max:50',
             'imagen' => 'nullable|string|max:255',
             'costo' => 'required|numeric',
-            'total_cupo' => 'required|integer',
             'cupo_disponible' => 'required|integer',
             'fecha' => 'required|date',
-            'estado' => 'required|in:A,I',
+
         ]);
 
         $gestionMenu = new GestionMenu($request->except(['imagen']));
@@ -46,10 +47,35 @@ class GestionMenuController extends Controller
             $gestionMenu->imagen = $path; // Guardar la ruta del archivo en la columna 'imagen'
         }
 
-        // Guardar el resto de campos en la base de datos
-        $gestionMenu->save();
+        DB::beginTransaction();
+            try {
+                // Crear el GestionMenu
+                $gestionMenu = GestionMenu::create($request->all());
+                
+                // Recoger los menús ofertados y los tipos de menú
+                $menusOfertados = $request->input('menus_ofertados');
+                $tiposMenu = $request->input('tipos_menu');
 
-        return response()->json($gestionMenu, 201);
+                foreach ($menusOfertados as $index => $menuOfertadoId) {
+                    GestionMenuDetalle::create([
+                        'gestion_menu_id' => $gestionMenu->id,
+                        'menu_ofertado_id' => $menuOfertadoId,
+                        // Aquí asumimos que la relación está en la tabla 'menus' y se refiere al tipo de menú
+                        'menu_id' => $tiposMenu[$index]
+                    ]);
+                }
+
+        // Comprometer la transacción
+        DB::commit();
+        return response()->json(['message' => 'Gestión de menú creada con éxito'], 201);
+    } catch (\Exception $e) {
+        // Si algo sale mal, revierte la transacción
+        DB::rollback();
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+
+
+        
     }
 
     public function show($id)

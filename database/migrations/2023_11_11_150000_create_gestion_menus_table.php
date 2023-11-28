@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('semestre_id')->constrained('semestres');
             $table->foreignId('tipo_plato_id')->constrained('tipo_platos');
             $table->foreignId('turno_id')->constrained('turnos');
-            $table->foreignId('menu_ofertado_id')->constrained('menu_ofertados');
             $table->string('descripcion', 50);
             $table->string('imagen', 255)->nullable();
             $table->decimal('costo', 6, 2);
