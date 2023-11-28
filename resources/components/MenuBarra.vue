@@ -10,10 +10,12 @@
                        <li class="nav-item"><a class="nav-link" href="">Licenciatura en<br>gastronomia</a></li>
                        <li class="nav-item"><a class="nav-link" href="">Docentes</a></li>
                        <li class="nav-item"><a class="nav-link" href="">Galeria</a></li>
-                       <li class="nav-item"><a class="nav-link" href="">Reserva</a></li>
-                   </ul>
+                       <li class="nav-item">
+  <router-link class="nav-link" to="/reserva">Reserva</router-link>
+</li>                   </ul>
                    <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Inicio</router-link>
                     <router-link to="/registrarse" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</router-link>
+                    <router-link to="/login" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Iniciar sesión</router-link>
 
               
                     

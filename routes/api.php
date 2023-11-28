@@ -10,7 +10,6 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
-use App\Http\Controllers\PlatoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +27,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [ClienteController::class, 'store']);
+
+
+Route::post('/login', [LoginController::class, 'store']);
 // Obtener todas las categorías
 Route::get('/categorias', [CategoriaController::class, 'index']);
 
@@ -51,3 +53,9 @@ Route::get('/platos', [PlatoController::class, 'index']);
 // Obtener todos los gestiones de menú
 Route::get('/gestion-menus', [GestionMenuController::class, 'index']);
 Route::post('/gestion-menus', [GestionMenuController::class, 'store']);
+
+// Obtener todos los gestiones de menú
+Route::get('/menus-activos', [GestionMenuController::class, 'getMenusActivos']);
+
+// Obtener todos las Reservas
+Route::post('/reserva', [ReservaController::class, 'store']);

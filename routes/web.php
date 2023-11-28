@@ -94,8 +94,7 @@ Route::get('/plato/{plato}/edit', [PlatoController::class, 'edit'])->name('plato
 Route::put('/plato/{plato}', [PlatoController::class, 'update'])->name('platos.update');
 Route::delete('/plato/{plato}', [PlatoController::class, 'destroy'])->name('platos.destroy');
 
-
-
+Route::post('/reserva', [ReservaController::class, 'store']);
 
 Route::get('/tipoPlatos', [TipoPlatoController::class, 'index']);
 Route::get('/tipoPlatos/create', [TipoPlatoController::class, 'create'])->name('tipoPlatos.create');

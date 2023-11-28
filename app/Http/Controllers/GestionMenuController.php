@@ -22,6 +22,12 @@ class GestionMenuController extends Controller
         return response()->json($gestionMenus);
     }
 
+    public function getMenusActivos()
+    {
+        $menusActivos = GestionMenu::where('estado', 'A')->get();
+        return response()->json($menusActivos);
+    }
+
     public function store(Request $request)
     {
         // Validar los datos del request

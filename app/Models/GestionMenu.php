@@ -40,4 +40,9 @@ class GestionMenu extends Model
     {
         return $this->belongsToMany(Bebida::class, 'bebida_ofertada');
     }
+
+    public function reserva()
+    {
+        return $this->hasMany(Reserva::class);
+    }
 }
