@@ -12,6 +12,7 @@ use App\Models\GestionMenuDetalle;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GestionMenuController extends Controller
 {
@@ -32,44 +33,48 @@ class GestionMenuController extends Controller
     {
         // Validar los datos del request
         $validator = Validator::make($request->all(), [
-            'categoria_id' => 'required|exists:categorias,id',
-            'semestre_id' => 'required|exists:semestres,id',
-            'tipo_plato_id' => 'required|exists:tipo_platos,id',
-            'turno_id' => 'required|exists:turnos,id',
-            'menu_ofertado_id' => 'required|exists:menu_ofertados,id',
-            'descripcion' => 'required|string|max:50',
-            'imagen' => 'nullable|string|max:255',
-            'costo' => 'required|numeric',
-            'cupo_disponible' => 'required|integer',
-            'fecha' => 'required|date',
+        'categoria_id' => 'required|',
+        'semestre_id' => 'required|',
+        'tipo_plato_id' => 'required|',
+        'turno_id' => 'required|',
+        'descripcion' => 'required|string|max:50',
+        'imagen' => 'nullable|image|',
+        'costo' => 'required|integer',
+        'cupo_disponible' => 'required|integer',
+        'fecha' => 'required|date',
+    ]);
 
-        ]);
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
 
-        $gestionMenu = new GestionMenu($request->except(['imagen']));
+    // Iniciar transacción
+    DB::beginTransaction();
+    try {
+        // Crear el GestionMenu
+        $gestionMenuData = $request->except(['imagen', 'menus_ofertados', 'tipos_menu']);
+        $gestionMenu = GestionMenu::create($gestionMenuData);
 
-        // Verificar si hay un archivo de imagen en la solicitud
+        // Verificar si hay un archivo de imagen en la solicitud y subirlo
         if ($request->hasFile('imagen')) {
             $path = $request->file('imagen')->store('public/imagenes');
-            $gestionMenu->imagen = $path; // Guardar la ruta del archivo en la columna 'imagen'
+            $gestionMenu->imagen = Storage::url($path); // Guardar la URL de la imagen
+            $gestionMenu->save(); // Guardar después de asignar la imagen
         }
 
-        DB::beginTransaction();
-            try {
-                // Crear el GestionMenu
-                $gestionMenu = GestionMenu::create($request->all());
-                
-                // Recoger los menús ofertados y los tipos de menú
-                $menusOfertados = $request->input('menus_ofertados');
-                $tiposMenu = $request->input('tipos_menu');
+        // Recoger los menús ofertados y los tipos de menú
+        $menusOfertados = $request->input('menus_ofertados', []);
+        $tiposMenu = $request->input('tipos_menu', []);
 
-                foreach ($menusOfertados as $index => $menuOfertadoId) {
-                    GestionMenuDetalle::create([
-                        'gestion_menu_id' => $gestionMenu->id,
-                        'menu_ofertado_id' => $menuOfertadoId,
-                        // Aquí asumimos que la relación está en la tabla 'menus' y se refiere al tipo de menú
-                        'menu_id' => $tiposMenu[$index]
-                    ]);
-                }
+        foreach ($menusOfertados as $index => $menuOfertadoId) {
+            if (isset($tiposMenu[$index])) {
+                GestionMenuDetalle::create([
+                    'gestion_menu_id' => $gestionMenu->id,
+                    'menu_ofertado_id' => $menuOfertadoId,
+                    'menu_id' => $tiposMenu[$index] // Esto debería ser el ID de la categoría del menú
+                ]);
+            }
+        }
 
         // Comprometer la transacción
         DB::commit();
@@ -79,10 +84,7 @@ class GestionMenuController extends Controller
         DB::rollback();
         return response()->json(['error' => $e->getMessage()], 500);
     }
-
-
-        
-    }
+}
 
     public function show($id)
     {

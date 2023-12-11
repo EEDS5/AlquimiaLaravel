@@ -9,7 +9,7 @@ class GestionMenu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['categoria_id', 'semestre_id', 'tipo_plato_id', 'turno_id', 'menu_ofertado_id', 'descripcion', 'imagen', 'costo', 'total_cupo', 'cupo_disponible', 'fecha', 'estado'];
+    protected $fillable = ['categoria_id', 'semestre_id', 'tipo_plato_id', 'turno_id',  'descripcion', 'imagen', 'costo', 'total_cupo', 'cupo_disponible', 'fecha', 'estado'];
 
     public function categoria()
     {
@@ -31,10 +31,6 @@ class GestionMenu extends Model
         return $this->belongsTo(Turno::class);
     }
 
-    public function menuOfertado()
-    {
-        return $this->belongsTo(MenuOfertado::class);
-    }
 
     public function bebida()
     {
