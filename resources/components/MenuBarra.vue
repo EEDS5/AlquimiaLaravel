@@ -14,11 +14,16 @@
   <router-link class="nav-link" to="/reserva">Reserva</router-link>
 </li>                   </ul>
                    <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Inicio</router-link>
+                   <div v-if="isLoggedIn">
+                        <span style="color: white;">Bienvenido, {{ userName }}</span>
+                        <button @click="logout" class="btn btn-secondary">Cerrar Sesión</button>
+                  </div>
+                  <div v-else>
                     <router-link to="/registrarse" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Registrarse</router-link>
                     <router-link to="/login" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Iniciar sesión</router-link>
+                  </div>
 
               
-                    
 
                </div>
            </div>
@@ -48,7 +53,13 @@
    <script>
        export default {
            name: 'BarraMenu',
-           methods: {
+           data() {
+                return {
+                    isLoggedIn: false,
+                    userName: ''
+                };
+            },
+             methods: {
                 goToRegister() {
                   window.location.href = '/register';
                 },
@@ -56,6 +67,23 @@
                 goToLogin() {
                   window.location.href = '/login';
                 },
+
+                logout() {
+                // Limpiar localStorage
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userName');
+                // Actualizar cualquier estado relevante o redirigir
+                this.isLoggedIn = false;
+                this.userName = '';
+                 // Por ejemplo, si usas una propiedad reactiva para el estado de inicio de sesión:
+                this.$router.push('/'); // Redirigir al usuario a la página de inicio de sesión
+                }
+
               },
+
+              mounted() {
+                this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                this.userName = localStorage.getItem('userName');
+              }
        }
    </script>

@@ -57,7 +57,16 @@ export default {
 
         axios.post('/api/login', this.form)
             .then(response => {
+
+                
                 console.log(response);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', this.form.username);
+
+                console.log("isLoggedIn:", localStorage.getItem('isLoggedIn'));
+                console.log("userName:", localStorage.getItem('userName'));
+                
+
                 this.successMessage = 'Inicio de sesión exitoso. Redirigiendo...';
                 // Redirige a la ruta proporcionada o la raíz por defecto
                 this.$router.push('/dashboard');
