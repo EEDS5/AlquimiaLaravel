@@ -51,6 +51,10 @@ export default {
   },
   mounted() {
     this.cargarMenusActivos();
+    this.loadUserData();
+    if (this.userData) {
+      this.preRellenarDatosUsuario();
+    }
   },
   methods: {
     cargarMenusActivos() {
@@ -62,6 +66,22 @@ export default {
           console.error('Error al cargar los menús activos:', error);
         });
     },
+
+    loadUserData() {
+      const userData = localStorage.getItem('userData');
+      if (userData) {
+        this.userData = JSON.parse(userData);
+      }
+    },
+    preRellenarDatosUsuario() {
+      this.form.nombre = this.userData.nombre || '';
+      this.form.apellido_p = this.userData.apellido_p || '';
+      this.form.apellido_m = this.userData.apellido_m || '';
+      this.form.ci = this.userData.ci || '';
+      this.form.email = this.userData.email || '';
+      this.form.telefono = this.userData.telefono || '';
+    },
+
     confirmarSeleccionMenu() {
       console.log("Menú seleccionado:", this.form.gestion_menu_id);
     },

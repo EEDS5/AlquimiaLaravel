@@ -35,6 +35,7 @@
 
 <script>
 import axios from 'axios';
+import { eventBus } from '../utils/eventBus';
 
 export default {
     data() {
@@ -57,10 +58,30 @@ export default {
 
         axios.post('/api/login', this.form)
             .then(response => {
+
+                console.log("Response Data:", response.data);
                 console.log(response);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', this.form.username);
+
+                console.log("isLoggedIn:", localStorage.getItem('isLoggedIn'));
+                console.log("userName:", localStorage.getItem('userName'));
+
                 this.successMessage = 'Inicio de sesión exitoso. Redirigiendo...';
                 // Redirige a la ruta proporcionada o la raíz por defecto
                 this.$router.push('/dashboard');
+
+                eventBus.emit('userLoggedIn', this.form.username);
+
+                // Guardar los datos del usuario en el local storage
+                localStorage.setItem('userData', JSON.stringify({
+                        nombre: response.data.user.nombre,
+                        apellido_p: response.data.user.apellido_p,
+                        apellido_m: response.data.user.apellido_m,
+                        ci: response.data.user.ci,
+                        email: response.data.user.email,
+                        telefono: response.data.user.telefono
+                    }));
             })
             .catch(error => {
                 console.error('Error en el inicio de sesión', error);
