@@ -48,7 +48,7 @@
                 <option disabled value="">Elige una de las opciones</option>
                 <!-- Opciones de tipo plato -->
                 <option v-for="tipoPlato in tipoPlatos" :key="tipoPlato.id" :value="tipoPlato.id">
-                  {{ tipoPlato.descripcion }}
+                  {{ tipoPlato.nombre }}
                 </option>
               </select>
             </div>
@@ -130,8 +130,8 @@
 
             <!-- Precio y Cupos -->
             <div class="mb-3">
-              <label for="precio" class="form-label">Precio:</label>
-              <input type="number" id="precio" class="form-control" v-model="form.precio" required>
+              <label for="costo" class="form-label">Costo:</label>
+              <input type="number" id="costo" class="form-control" v-model="form.costo" required>
 
               <label for="cupos" class="form-label">Cupos:</label>
               <input type="number" id="cupos" class="form-control" v-model="form.cupos" required>
@@ -219,12 +219,10 @@
       return {
         
         form: {
-          
           categoria_id: '',
           semestre_id: '',
           tipo_plato_id: '',
           turno_id: '',
-          menu_ofertado_id: '',
           descripcion: '',
           imagen: '',
           costo: '',
@@ -235,17 +233,13 @@
           entrantes: [{ id: null }],
           principales: [{ id: null }],
           postres: [{ id: null }],
-          BarraLibre: [{ nombre: '' }],
+          BarraLibre: [{ id: null }],
         },
         semestreData: {
           fecha_inicio: null,
           fecha_final: null,
         },
-        categorias: [
-          { id: 1, descripcion: 'Menu cerrado' },
-          { id: 2, descripcion: 'Buffet' },
-        ],
-
+        
         file: null, // Este es para mantener el archivo binario de la imagen
         categorias: [], // Datos dinámicos cargados del backend
         semestres: [],  // Datos dinámicos cargados del backend
@@ -347,64 +341,72 @@
           this.form.BarraLibre.splice(index, 1);
         }
       },
+      printFormData() {
+      console.log(this.form);
+    },
 
-
-
-  
     submitForm() {
+        // Crear un objeto FormData para enviar los datos del formulario
         const formData = new FormData();
 
-        // Agregar archivo de imagen si está presente
+        // Agregar el archivo de imagen si está presente
         if (this.file) {
           formData.append('imagen', this.file);
         }
 
-        // Agregar otros campos al objeto FormData
-        for (const key in this.form) {
-          if (['imagen', 'entrantes', 'principales', 'postres', 'BarraLibre'].includes(key)) continue;
-          formData.append(key, this.form[key]);
-        }
+        // Agregar los campos del formulario al objeto FormData
+        formData.append('categoria_id', this.form.categoria_id);
+        formData.append('semestre_id', this.form.semestre_id);
+        formData.append('tipo_plato_id', this.form.tipo_plato_id);
+        formData.append('turno_id', this.form.turno_id);
+        formData.append('descripcion', this.form.descripcion);
+        formData.append('costo', this.form.costo);
+        formData.append('total_cupo', this.form.cupos); // Suponiendo que 'total_cupo' es lo mismo que 'cupos'
+        formData.append('cupo_disponible', this.form.cupos);
+        formData.append('fecha', this.form.fecha);
+        formData.append('estado', 'A'); // Suponiendo que 'estado' siempre es 'A' para activo
 
         // Agregar los IDs de los platos seleccionados como menús ofertados
-        const agregarPlatos = (platos, tipoMenuId) => {
-          platos.forEach(plato => {
-            if (plato.id) { // Asegúrate de que hay un plato seleccionado
-              formData.append('menus_ofertados[]', plato.id);
-              formData.append('tipos_menu[]', tipoMenuId);
-            }
-          });
-        };
+        this.form.entrantes.concat(this.form.principales, this.form.postres, this.form.BarraLibre).forEach(plato => {
+          if (plato.id) {
+            formData.append('menus_ofertados[]', plato.id);
+          }
+        });
 
-        agregarPlatos(this.form.entrantes, 1); // ID para Entrantes
-        agregarPlatos(this.form.principales, 2); // ID para Principales
-        agregarPlatos(this.form.postres, 3); // ID para Postres
-        agregarPlatos(this.form.BarraLibre, 4); // ID para Barra Libre
+        // Imprimir la información que se va a enviar para depuración
+        console.log('Data que se enviará:', Object.fromEntries(formData.entries()));
 
-
-        // Agregar campos que no están en el modelo de formulario, como cupo_disponible y estado
-        formData.append('cupo_disponible', this.form.cupos);
-        formData.append('estado', 'A');
-
-        // Enviar FormData en lugar de this.form
+        // Enviar el formulario usando Axios
         axios.post('/api/gestion-menus', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(response => {
-          // Manejar respuesta exitosa
-          // Resetear el formulario si es necesario
-          // Mostrar mensaje de éxito
+          // Trata la respuesta del servidor aquí
+          console.log('Respuesta del servidor:', response);
+          // Por ejemplo, redirige o muestra un mensaje de éxito
+          alert('Menú guardado con éxito');
+          this.$router.push('/'); // Redireccion
         })
-        .catch(error => {
-          if (error.response && error.response.status === 422) {
-            // Manejar errores de validación
-            this.errors = error.response.data.errors;
+          .catch(error => {
+          // Manejar errores de validación o de servidor
+          if (error.response) {
+          if (error.response.status === 422) {
+          // Errores de validación
+          this.errors = error.response.data.errors;
+          alert('Errores de validación. Por favor, verifica los datos del formulario.');
           } else {
-            // Manejar otros errores
+          // Otros errores del servidor
+          alert('Error al guardar el menú. Por favor, intenta de nuevo.');
           }
-        });
-      },
+          } else {
+          console.error('Error:', error);
+          alert('Error de conexión o de servidor.');
+          }
+         });
+     }
+
     },
     watch: {
       'form.fecha'(newDate) {
