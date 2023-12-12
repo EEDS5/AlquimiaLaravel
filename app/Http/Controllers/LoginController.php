@@ -39,8 +39,18 @@ class LoginController extends Controller
         // Asignar manualmente una sesión
         session(['user' => $user]);
 
+        // Cargar la relación con Persona
+        //\Log::info('Usuario antes de cargar persona: ', ['user' => $user]);
+
+        //if ($user->persona()->exists()) {
+            //$user->load('persona');
+            //\Log::info('Usuario después de cargar persona: ', ['user' => $user]);
+        //}
+        
         return response()->json([
             'message' => 'Inicio de sesión exitoso',
+            'user' => $user, // Datos del Usuario
+            'persona' => $user->persona // Datos de la Persona
         ]);
     }
 }

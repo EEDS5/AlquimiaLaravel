@@ -1,31 +1,54 @@
 <template>
-  <div>
-    <form @submit.prevent="submitForm">
-      <!-- Campos de Datos de la Persona -->
-      <input type="text" v-model="form.nombre" placeholder="Nombre" required>
-      <input type="text" v-model="form.apellido_p" placeholder="Apellido Paterno" required>
-      <input type="text" v-model="form.apellido_m" placeholder="Apellido Materno" required>
-      <input type="text" v-model="form.ci" placeholder="CI" required>
-      <input type="email" v-model="form.email" placeholder="Email" required>
-      <input type="tel" v-model="form.telefono" placeholder="Teléfono" required>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h2 class="text-center mb-4 form-header">Registrar Reserva</h2>
+        <form @submit.prevent="submitForm" class="form-styling border p-4 rounded">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" v-model="form.nombre" placeholder="Nombre" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="apellido_p" class="form-label">Apellido Paterno:</label>
+            <input type="text" id="apellido_p" v-model="form.apellido_p" placeholder="Apellido Paterno" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="apellido_m" class="form-label">Apellido Materno:</label>
+            <input type="text" id="apellido_m" v-model="form.apellido_m" placeholder="Apellido Materno" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="ci" class="form-label">CI:</label>
+            <input type="text" id="ci" v-model="form.ci" placeholder="CI" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" v-model="form.email" placeholder="Email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono:</label>
+            <input type="tel" id="telefono" v-model="form.telefono" placeholder="Teléfono" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="gestion_menu_id" class="form-label">Gestión Menú Activo:</label>
+            <select id="gestion_menu_id" v-model="form.gestion_menu_id" class="form-select" required>
+              <option disabled value="">Seleccione un Gestión Menú</option>
+              <option v-for="menu in menusActivos" :key="menu.id" :value="menu.id">{{ menu.descripcion }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha de Reserva:</label>
+            <input type="date" id="fecha" v-model="form.fecha" :min="minDate" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="cantidad_cupo" class="form-label">Cantidad de Cupo:</label>
+            <input type="number" id="cantidad_cupo" v-model="form.cantidad_cupo" placeholder="Cantidad de Cupo" min="1" class="form-control" required>
+          </div>
 
-      <!-- Selección de GestionMenu Activo -->
-      <select v-model="form.gestion_menu_id" required>
-        <option disabled value="">Seleccione un Gestión Menú</option>
-        <option v-for="menu in menusActivos" :key="menu.id" :value="menu.id">
-          {{ menu.descripcion }}
-        </option>
-      </select>
-
-      <!-- Campo para Fecha de Reserva (Fecha futura) -->
-      <input type="date" v-model="form.fecha" :min="minDate" required>
-
-      <!-- Campo para Cantidad de Cupo (No negativos) -->
-      <input type="number" v-model="form.cantidad_cupo" placeholder="Cantidad de Cupo" min="1" required>
-
-      <!-- Botón para enviar el formulario -->
-      <button type="submit">Registrar Reserva</button>
-    </form>
+          <!-- Botón para enviar el formulario -->
+          <button type="submit" class="btn btn-primary">Registrar Reserva</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,6 +94,7 @@ export default {
       const userData = localStorage.getItem('userData');
       if (userData) {
         this.userData = JSON.parse(userData);
+        this.preRellenarDatosUsuario();
       }
     },
     preRellenarDatosUsuario() {
@@ -82,9 +106,6 @@ export default {
       this.form.telefono = this.userData.telefono || '';
     },
 
-    confirmarSeleccionMenu() {
-      console.log("Menú seleccionado:", this.form.gestion_menu_id);
-    },
     submitForm() {
       console.log("Formulario a enviar:", this.form); // Depuración
       const datosClienteYReserva = {
@@ -119,3 +140,32 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* Copia los estilos de RegistroGestionMenu.vue aquí */
+.form-header {
+  color: white;
+}
+
+.form-styling {
+  background-color: #343a40; /* Bootstrap dark background */
+  color: white;
+}
+
+.form-styling .form-control, .form-styling .form-select {
+  margin-bottom: 15px;
+}
+
+.form-styling .btn-primary {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.invalid-feedback {
+  display: block; 
+  width: 100%; 
+  overflow: visible;
+}
+</style>
+

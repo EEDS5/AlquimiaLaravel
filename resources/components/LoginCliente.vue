@@ -63,6 +63,15 @@ export default {
                 console.log(response);
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userName', this.form.username);
+                if (response.data.persona) {
+                        // Si 'persona' existe en la respuesta, guarda sus datos
+                        localStorage.setItem('userData', JSON.stringify(response.data.persona));
+                    } else {
+                        // Si 'persona' no existe, manejar de forma adecuada
+                        console.log('Datos de persona no están disponibles');
+                        // Opcionalmente, podrías establecer un valor predeterminado o vacío
+                        localStorage.setItem('userData', JSON.stringify({}));
+                    }
 
                 console.log("isLoggedIn:", localStorage.getItem('isLoggedIn'));
                 console.log("userName:", localStorage.getItem('userName'));

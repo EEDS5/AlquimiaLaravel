@@ -17,9 +17,6 @@ class User extends Authenticatable {
         return $this->contraseña;
     }
 
-    
-
-
     protected $fillable = [
         'username',
         'contraseña',
@@ -29,6 +26,4 @@ class User extends Authenticatable {
         'contraseña',
         'remember_token',
     ];
-
-    
 }
