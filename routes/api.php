@@ -10,11 +10,9 @@ use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\MenuOfertadoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\GestionMenuController;
-<<<<<<< HEAD
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReservaController;
-=======
->>>>>>> b57ee2867047b228473d1460b36bfc98ecb747bb
+use App\Http\Controllers\PlatoController;
 
 /*
 |--------------------------------------------------------------------------
