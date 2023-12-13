@@ -17,7 +17,9 @@ class ClienteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id' => \App\Models\Persona::inRandomOrder()->first()->id, // Asume que las Personas están previamente creadas
+            'razon_social' => $this->faker->optional()->company,
+            'nit' => $this->faker->optional()->numerify('#########'),
         ];
     }
 }

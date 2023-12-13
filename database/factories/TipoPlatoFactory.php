@@ -17,7 +17,9 @@ class TipoPlatoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre' => $this->faker->word, // Genera una palabra
+            'descripcion' => $this->faker->optional()->sentence, // Genera una frase (opcional)
+            'estado' => $this->faker->boolean, // Genera un valor booleano aleatorio
         ];
     }
 }

@@ -19,6 +19,25 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        // Crea 10 platos
         \App\Models\Plato::factory(10)->create();
+
+        // Crea 10 categorías
+        \App\Models\Categoria::factory(10)->create();
+
+        // Crea 10 menús
+        \App\Models\Menu::factory(10)->create(); 
+
+        // Crea 10 tipos de platos
+        \App\Models\TipoPlato::factory(10)->create(); 
+
+        // Crea tipos de personas
+        $this->call(TipoPersonaSeeder::class);
+
+        // Crea 20 personas
+        \App\Models\Persona::factory(20)->create();
+
+        // Crea 10 clientes
+        \App\Models\Cliente::factory(10)->create();
     }
 }

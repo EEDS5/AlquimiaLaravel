@@ -12,8 +12,10 @@ class TipoEmpleadoSeeder extends Seeder
      */
     public function run(): void
     {
-        TipoPersona::create([
-            'descripcion' => 'cliente'
-        ]);
+        $tipos = ['cliente', 'empleado - cajero', 'empleado - cocinero', 'empleado - mesero'];
+
+        foreach ($tipos as $tipo) {
+            TipoPersona::create(['descripcion' => $tipo]);
+        }
     }
 }

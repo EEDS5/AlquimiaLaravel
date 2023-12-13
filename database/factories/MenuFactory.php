@@ -17,7 +17,8 @@ class MenuFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre' => $this->faker->words(2, true), // Genera un nombre de 2 palabras
+            'estado' => $this->faker->boolean, // Genera un valor booleano aleatorio
         ];
     }
 }
