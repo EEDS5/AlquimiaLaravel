@@ -4,6 +4,7 @@ import  MenuBarra  from '../components/MenuBarra.vue'
 import  RegistroCliente from '../components/RegistroCliente.vue'
 import LoginCliente from '../components/LoginCliente.vue';
 import Dashboard from '../components/Dashboard.vue';
+import Googlemaps from '../components/Googlemaps.vue';
 import router from './router';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,6 +30,7 @@ app.component('dashboard-cliente', Dashboard);
 // app.component('validation-message', ValidationMessage);
 app.component('video-alquimia', VideoAlquimia);
 app.component('registro-gestion-menu', RegistroGestionMenu);
+app.component('googlemaps', Googlemaps);
 
 app.use(router);
 
