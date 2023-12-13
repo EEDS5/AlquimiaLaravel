@@ -16,8 +16,14 @@ class TurnoFactory extends Factory
      */
     public function definition(): array
     {
+        $horaEntrada = $this->faker->time();
+        $horaLimite = $this->faker->time('H:i:s', '23:59:59'); // Asegúrate de que la hora límite sea posterior a la hora de entrada
+
         return [
-            //
+            'descripcion' => 'Turno ' . $this->faker->unique()->word,
+            'hora_entrada' => $horaEntrada,
+            'hora_limite' => $horaLimite,
+            'estado' => $this->faker->boolean,
         ];
     }
 }

@@ -16,8 +16,14 @@ class SemestreFactory extends Factory
      */
     public function definition(): array
     {
+        $fechaInicio = $this->faker->date();
+        $fechaFinal = $this->faker->date('Y-m-d', '2023-12-31'); // Asegúrate de que la fecha final sea posterior a la fecha de inicio
+
         return [
-            //
+            'nombre' => 'Semestre ' . $this->faker->unique()->word,
+            'fecha_inicio' => $fechaInicio,
+            'fecha_final' => $fechaFinal,
+            'estado' => $this->faker->boolean,
         ];
     }
 }

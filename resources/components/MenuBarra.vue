@@ -16,7 +16,7 @@
                       <router-link class="nav-link" to="/reserva">Reserva</router-link>
                       </li>                   
                     </ul>
-                 <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Greacion <br> Menú</router-link>
+                 <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Creación <br> Menú</router-link>
                  <div v-if="isLoggedIn">
                       <span style="color: white;">Bienvenido, {{ userName }}</span>
                       <button @click="logout" class="btn btn-secondary">Cerrar Sesión</button>
