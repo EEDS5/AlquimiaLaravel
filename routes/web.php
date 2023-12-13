@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TipoPersonaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\TipoPlatoController;
+use App\Http\Controllers\TipoEmpleadoController;
 use App\Http\Controllers\PlatoController;
 use App\Http\Controllers\BebidaController;
 use App\Http\Controllers\CategoriaController;

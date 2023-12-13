@@ -1,19 +1,22 @@
 <template>
   <nav class="navbar navbar-expand-md sticky-top py-3 navbar-dark" id="mainNav" style="background: var(--bs-emphasis-color);">
          <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><a class="navbar-brand" href="#">
-         <img src="../imagenes/LogoAlquimia.svg" alt="" width="250" height="50" class="d-inline-block align-text-top img-fluid">
+         <img src="../imagenes/LogoAlquimia.svg" alt="" width="250" height="50" class="d-inline-block align-text-top img-fluid" to="/">
        </a></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
              <div class="collapse navbar-collapse" id="navcol-1">
                  <ul class="navbar-nav mx-auto mr-auto">
-                     <li class="nav-item"><a class="nav-link active" href="">Inicio</a></li>
+                    <li class="nav-item">
+                      <router-link class="nav-link" to="/">Inicio</router-link>
+                    </li>
                      <li class="nav-item"><a class="nav-link " href="">Acerca de <br>nosotros</a></li>
                      <li class="nav-item"><a class="nav-link" href="">Licenciatura en<br>gastronomia</a></li>
                      <li class="nav-item"><a class="nav-link" href="">Docentes</a></li>
                      <li class="nav-item"><a class="nav-link" href="">Galeria</a></li>
                      <li class="nav-item">
-<router-link class="nav-link" to="/reserva">Reserva</router-link>
-</li>                   </ul>
-                 <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Inicio</router-link>
+                      <router-link class="nav-link" to="/reserva">Reserva</router-link>
+                      </li>                   
+                    </ul>
+                 <router-link to="/registroMenu" class="btn btn-secondary" role="button" style="background-color: #ffffff; color: #000000; border-radius: 10px;">Greacion <br> Menú</router-link>
                  <div v-if="isLoggedIn">
                       <span style="color: white;">Bienvenido, {{ userName }}</span>
                       <button @click="logout" class="btn btn-secondary">Cerrar Sesión</button>
@@ -73,6 +76,10 @@
 
               goToLogin() {
                 window.location.href = '/login';
+              },
+              
+              goToLogin() {
+                window.location.href = '/';
               },
 
               logout() {

@@ -157,58 +157,57 @@
   </div>
 </template>
 
+
 <style scoped>
+
+  
   .form-container {
-    max-width: 400px;
+    max-width: 500px; /* Ajusta según sea necesario */
     margin: 0 auto;
+    padding: 20px;
   }
 
-  /* Estilos adicionales para campos y botones */
+  .form-header {
+    color: #ff3860; /* O el color que prefieras */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-styling {
+    background-color: #343a40; /* Bootstrap dark background */
+    color: white; 
+    padding: 20px;
+    border-radius: 8px;
+  }
+
   .form-control, .form-select {
     margin-bottom: 15px;
+    border-radius: 5px; /* Bordes redondeados */
   }
 
-  /* Botón centrado y estilizado */
   .btn-primary {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
+    background-color: #007bff; /* O el color que prefieras */
+    border: none;
+    border-radius: 5px;
   }
 
-  .form-header {
-  color: white;
-}
+  .invalid-feedback {
+    display: block;
+    color: #ff3860; /* Color de error */
+  }
 
-.form-styling {
-  background-color: #343a40; /* Bootstrap dark background */
-  color: white;
-}
-
-.form-styling .form-control, .form-styling .form-select {
-  margin-bottom: 15px;
-}
-
-.form-styling .btn-primary {
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-.form-styling  {
-  color: #faf9f9; 
-}
-
-.invalid-feedback {
-  display: block; 
-  width: 100%; 
-  overflow: visible; 
-  /**display: block*/;
-}
-
-
-
-/* Si necesitas estilos adicionales, aquí puedes añadirlos */
+  /* Media query para dispositivos móviles */
+  @media (max-width: 768px) {
+    .form-container {
+      width: 90%;
+      padding: 10px;
+    }
+  }
 </style>
+
 
   
 <script>
